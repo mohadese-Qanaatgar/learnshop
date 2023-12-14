@@ -11,12 +11,17 @@ export default function LastCourses() {
           <SectionHeader
             title="جدیدترین دوره ها"
             desc="سکوی پرتاب شما به سوی موفقیت"
-            btnTitle='تمامی دوره ها'
+            btnTitle="تمامی دوره ها"
           />
           <div class="courses-content">
             <div class="container">
               <div class="row">
-                <CourseBox/>
+                <CourseBox
+                  title="دوره پروژه محور متخصص جنگو"
+                  teacher="رضا دولتی"
+                  users='500'
+                  price='1,000,000'
+                />
               </div>
             </div>
           </div>

@@ -1,7 +1,7 @@
 import React from 'react';
 import './CourseBox.css';
 
-export default function CourseBox() {
+export default function CourseBox({title , teacher , users , price}) {
   return (
     <div className="col-4">
       <div className="course-box">
@@ -14,14 +14,14 @@ export default function CourseBox() {
         </a>
         <div className="course-box__main">
           <a href="#" className="course-box__title">
-            دوره پروژه محور متخصص جنگو
+            {title}
           </a>
 
           <div className="course-box__rating-teacher">
             <div className="course-box__teacher">
               <i className="fas fa-chalkboard-teacher course-box__teacher-icon"></i>
               <a href="#" className="course-box__teacher-link">
-                رضا دولتی
+                {teacher}
               </a>
             </div>
             <div className="course-box__rating">
@@ -56,9 +56,9 @@ export default function CourseBox() {
           <div className="course-box__status">
             <div className="course-box__users">
               <i className="fas fa-users course-box__users-icon"></i>
-              <span className="course-box__users-text">500</span>
+              <span className="course-box__users-text">{users}</span>
             </div>
-            <span className="course-box__price">1,000,000</span>
+            <span className="course-box__price">{price}</span>
           </div>
         </div>
 
