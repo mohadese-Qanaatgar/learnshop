@@ -4,6 +4,9 @@ import Header from '../../Components/Header/Header'
 
 export default function Index() {
   return (
-    <div><Header/></div>
+    <>
+    <Header/>
+    
+    </>
   )
 }
