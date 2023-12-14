@@ -3,6 +3,11 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {BrowserRouter} from 'react-router-dom'
+import './Styles/reset.css'
+import './Styles/fonts.css'
+import './Styles/variables.css'
+import './Styles/helpers.css'
+import './Styles/defaults.css'
  
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

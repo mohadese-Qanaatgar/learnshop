@@ -7,6 +7,6 @@ export default function App() {
  const router = useRoutes(routes)
 
   return (
-    <div>App{router}</div>
+    <div>{router}</div>
   )
 }
