@@ -1,12 +1,27 @@
 import React from 'react';
 import './Landing.css';
+import Typewriter from 'typewriter-effect';
 
 export default function Landing() {
   return (
     <section className="landing">
       <div className="container">
         <h1 className="landing__title">
-          ما به هر قیمتی دوره آموزشی تولید نمی کنیم !
+          <Typewriter
+            onInit={(typeWriter) => {
+              typeWriter
+                .typeString('ما به هر قیمتی دوره آموزشی تولید نمی کنیم !')
+                .start()
+                .pauseFor(2000)
+                .deleteAll()
+                .typeString('آکادمی خصوصی برنامه نویسی')
+                .start()
+                .pauseFor(2000);
+            }}
+            options={{
+              loop: 'true',
+            }}
+          />
         </h1>
         <h2 className="landing__subtitle">
           با آکادمی سبزلرن، برنامه نویسی رو با خیال راحت یاد بگیر و پیشرفت کن.
@@ -83,7 +98,9 @@ export default function Landing() {
               </g>
             </svg>
             <span className="landing-status__count">31,320</span>
-            <span className="landing-status__text">دقیقه آموزش تولید کردیم</span>
+            <span className="landing-status__text">
+              دقیقه آموزش تولید کردیم
+            </span>
           </div>
         </div>
       </div>
