@@ -6,21 +6,51 @@ import CourseBox from '../CourseBox/CourseBox';
 export default function LastCourses() {
   return (
     <>
-      <div class="courses">
-        <div class="container">
+      <div className="courses">
+        <div className="container">
           <SectionHeader
             title="جدیدترین دوره ها"
             desc="سکوی پرتاب شما به سوی موفقیت"
             btnTitle="تمامی دوره ها"
           />
-          <div class="courses-content">
-            <div class="container">
-              <div class="row">
+          <div className="courses-content">
+            <div className="container">
+              <div className="row">
                 <CourseBox
                   title="دوره پروژه محور متخصص جنگو"
                   teacher="رضا دولتی"
-                  users='500'
-                  price='1,000,000'
+                  users="500"
+                  price="1,000,000"
+                />
+                <CourseBox
+                  title="دوره پروژه محور متخصص جنگو"
+                  teacher="رضا دولتی"
+                  users="500"
+                  price="1,000,000"
+                />
+                <CourseBox
+                  title="دوره پروژه محور متخصص جنگو"
+                  teacher="رضا دولتی"
+                  users="500"
+                  price="1,000,000"
+                />
+                <CourseBox
+                  title="دوره پروژه محور متخصص جنگو"
+                  teacher="رضا دولتی"
+                  users="500"
+                  price="1,000,000"
+                />
+                <CourseBox
+                  title="دوره پروژه محور متخصص جنگو"
+                  teacher="رضا دولتی"
+                  users="500"
+                  price="1,000,000"
+                />
+                <CourseBox
+                  title="دوره پروژه محور متخصص جنگو"
+                  teacher="رضا دولتی"
+                  users="500"
+                  price="1,000,000"
                 />
               </div>
             </div>

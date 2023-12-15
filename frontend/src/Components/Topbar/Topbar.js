@@ -34,13 +34,13 @@ export default function Topbar() {
         <div className="top-bar__left">
           <div className="top-bar__email">
             <a href="#" className="top-bar__email-text top-bar__link">
-              sabzlearn@gmail.com
+              learn@gmail.com
             </a>
             <i className="fas fa-envelope top-bar__email-icon"></i>
           </div>
           <div className="top-bar__phone">
             <a href="#" className="top-bar__phone-text top-bar__link">
-              09921558293
+              09000000000
             </a>
             <i className="fas fa-phone top-bar__phone-icon"></i>
           </div>
