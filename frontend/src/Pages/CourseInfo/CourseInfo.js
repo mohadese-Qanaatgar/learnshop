@@ -5,6 +5,7 @@ import Navbar from '../../Components/Navbar/Navbar';
 import Footer from '../../Components/Footer/Footer';
 import BreadCrump from '../../Components/BreadCrump/BreadCrump';
 import CourseDetailBox from '../../Components/CourseDetailBox/CourseDetailBox';
+import CommentsTextArea from '../../Components/CommentsTextArea/CommentsTextArea';
 
 export default function CourseInfo() {
   return (
@@ -366,6 +367,7 @@ export default function CourseInfo() {
                   </p>
                 </div>
                 {/*Finish teacher detailes */}
+                <CommentsTextArea/>
               </div>
             </div>
             <div className="col-4">
@@ -423,7 +425,7 @@ export default function CourseInfo() {
                     سرفصل های دوره
                   </span>
                   <span className="course-info__topic-text">
-                     برای مشاهده و یا دانلود دوره روی کلمه
+                    برای مشاهده و یا دانلود دوره روی کلمه
                     <a href="#" style={{ color: 'blue', fontWeight: 'bold' }}>
                       لینک
                     </a>
@@ -485,6 +487,7 @@ export default function CourseInfo() {
                     </li>
                   </ul>
                 </div>
+                
               </div>
             </div>
           </div>
