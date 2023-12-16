@@ -6,6 +6,7 @@ import Footer from '../../Components/Footer/Footer';
 import BreadCrump from '../../Components/BreadCrump/BreadCrump';
 import CourseDetailBox from '../../Components/CourseDetailBox/CourseDetailBox';
 import CommentsTextArea from '../../Components/CommentsTextArea/CommentsTextArea';
+import Accordion from 'react-bootstrap/Accordion';
 
 export default function CourseInfo() {
   return (
@@ -208,26 +209,10 @@ export default function CourseInfo() {
                   </div>
 
                   <div className="introduction__topic">
-                    <div className="accordion" id="accordionExample">
-                      <div className="accordion-item">
-                        <h2 className="accordion-header" id="headingOne">
-                          <button
-                            className="accordion-button"
-                            type="button"
-                            data-bs-toggle="collapse"
-                            data-bs-target="#collapseOne"
-                            aria-expanded="true"
-                            aria-controls="collapseOne"
-                          >
-                            معرفی دوره
-                          </button>
-                        </h2>
-                        <div
-                          id="collapseOne"
-                          className="accordion-collapse collapse show"
-                          aria-labelledby="headingOne"
-                          data-bs-parent="#accordionExample"
-                        >
+                    <Accordion defaultActiveKey="0">
+                      <Accordion.Item className="accordion" eventKey="0">
+                        <Accordion.Header>معرفی دوره</Accordion.Header>
+                        <Accordion.Body>
                           <div className="accordion-body introduction__accordion-body">
                             <div className="introduction__accordion-right">
                               <span className="introduction__accordion-count">
@@ -247,29 +232,13 @@ export default function CourseInfo() {
                               </span>
                             </div>
                           </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="accordion" id="accordionExample2">
-                      <div className="accordion-item">
-                        <h2 className="accordion-header" id="headingTwo">
-                          <button
-                            className="accordion-button"
-                            type="button"
-                            data-bs-toggle="collapse"
-                            data-bs-target="#collapseTwo"
-                            aria-expanded="true"
-                            aria-controls="collapseTwo"
-                          >
-                            معرفی دوره
-                          </button>
-                        </h2>
-                        <div
-                          id="collapseTwo"
-                          className="accordion-collapse collapse"
-                          aria-labelledby="headingTwo"
-                          data-bs-parent="#accordionExample2"
-                        >
+                        </Accordion.Body>
+                      </Accordion.Item>
+                      <Accordion.Item className="accordion" eventKey="1">
+                        <Accordion.Header>
+                          اصطلاحات مقدماتی مربوط به بک اند
+                        </Accordion.Header>
+                        <Accordion.Body>
                           <div className="accordion-body introduction__accordion-body">
                             <div className="introduction__accordion-right">
                               <span className="introduction__accordion-count">
@@ -280,7 +249,7 @@ export default function CourseInfo() {
                                 href="#"
                                 className="introduction__accordion-link"
                               >
-                                معرفی دوره + چرا یادگیری کتابخانه ها ضروری است؟
+                                جلسه اول
                               </a>
                             </div>
                             <div className="introduction__accordion-left">
@@ -289,51 +258,28 @@ export default function CourseInfo() {
                               </span>
                             </div>
                           </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="accordion" id="accordionExample3">
-                      <div className="accordion-item">
-                        <h2 className="accordion-header" id="headingThree">
-                          <button
-                            className="accordion-button"
-                            type="button"
-                            data-bs-toggle="collapse"
-                            data-bs-target="#collapseThree"
-                            aria-expanded="true"
-                            aria-controls="collapseThree"
-                          >
-                            معرفی دوره
-                          </button>
-                        </h2>
-                        <div
-                          id="collapseThree"
-                          className="accordion-collapse collapse"
-                          aria-labelledby="headingThree"
-                          data-bs-parent="#accordionExample3"
-                        >
                           <div className="accordion-body introduction__accordion-body">
                             <div className="introduction__accordion-right">
                               <span className="introduction__accordion-count">
-                                1
+                                2
                               </span>
                               <i className="fab fa-youtube introduction__accordion-icon"></i>
                               <a
                                 href="#"
                                 className="introduction__accordion-link"
                               >
-                                معرفی دوره + چرا یادگیری کتابخانه ها ضروری است؟
+                                جلسه دوم
                               </a>
                             </div>
                             <div className="introduction__accordion-left">
                               <span className="introduction__accordion-time">
-                                18:34
+                                13:20
                               </span>
                             </div>
                           </div>
-                        </div>
-                      </div>
-                    </div>
+                        </Accordion.Body>
+                      </Accordion.Item>
+                    </Accordion>
                   </div>
                 </div>
                 {/*Finish Introduction */}
@@ -367,7 +313,7 @@ export default function CourseInfo() {
                   </p>
                 </div>
                 {/*Finish teacher detailes */}
-                <CommentsTextArea/>
+                <CommentsTextArea />
               </div>
             </div>
             <div className="col-4">
@@ -487,7 +433,6 @@ export default function CourseInfo() {
                     </li>
                   </ul>
                 </div>
-                
               </div>
             </div>
           </div>
