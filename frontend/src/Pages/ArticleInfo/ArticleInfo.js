@@ -4,6 +4,7 @@ import Topbar from '../../Components/Topbar/Topbar';
 import Navbar from '../../Components/Navbar/Navbar';
 import Footer from '../../Components/Footer/Footer';
 import BreadCrump from '../../Components/BreadCrump/BreadCrump';
+import CommentsTextArea from '../../Components/CommentsTextArea/CommentsTextArea';
 
 export default function ArticleInfo() {
   return (
@@ -190,6 +191,7 @@ export default function ArticleInfo() {
                 </div>
               </div>
             </div>
+          
             </div>
           </div>
         </div>
