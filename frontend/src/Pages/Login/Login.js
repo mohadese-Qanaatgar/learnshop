@@ -3,6 +3,7 @@ import './Login.css';
 import Topbar from '../../Components/Topbar/Topbar';
 import Navbar from '../../Components/Navbar/Navbar';
 import Footer from '../../Components/Footer/Footer';
+import Input from '../../Components/Form/Input';
 import {Link} from 'react-router-dom'
 
 export default function Login() {
@@ -24,18 +25,20 @@ export default function Login() {
           </div>
           <form action="#" className="login-form">
             <div className="login-form__username">
-              <input
-                className="login-form__username-input"
-                type="text"
-                placeholder="نام کاربری یا آدرس ایمیل"
-              />
+              <Input 
+               className="login-form__username-input"
+               type="text"
+               placeholder="نام کاربری یا آدرس ایمیل"
+               element='input'
+               />
               <i className="login-form__username-icon fa fa-user"></i>
             </div>
             <div className="login-form__password">
-              <input
+              <Input
                 className="login-form__password-input"
-                type="text"
+                type="password"
                 placeholder="رمز عبور"
+                element='input'
               />
               <i className="login-form__password-icon fa fa-lock-open"></i>
             </div>
