@@ -4,9 +4,16 @@ import Topbar from '../../Components/Topbar/Topbar';
 import Navbar from '../../Components/Navbar/Navbar';
 import Footer from '../../Components/Footer/Footer';
 import Input from '../../Components/Form/Input';
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom';
+import Button from '../../Components/Form/Button';
 
 export default function Login() {
+
+  const userLogIn =(event) => {
+    event.preventDefault()
+    console.log('Login');
+  }
+
   return (
     <>
       <Topbar />
@@ -25,12 +32,12 @@ export default function Login() {
           </div>
           <form action="#" className="login-form">
             <div className="login-form__username">
-              <Input 
-               className="login-form__username-input"
-               type="text"
-               placeholder="نام کاربری یا آدرس ایمیل"
-               element='input'
-               />
+              <Input
+                className="login-form__username-input"
+                type="text"
+                placeholder="نام کاربری یا آدرس ایمیل"
+                element="input"
+              />
               <i className="login-form__username-icon fa fa-user"></i>
             </div>
             <div className="login-form__password">
@@ -38,17 +45,20 @@ export default function Login() {
                 className="login-form__password-input"
                 type="password"
                 placeholder="رمز عبور"
-                element='input'
+                element="input"
               />
               <i className="login-form__password-icon fa fa-lock-open"></i>
             </div>
-            <button className="login-form__btn" type="submit">
+            <Button className="login-form__btn" type="submit" onClick={userLogIn}>
               <i className="login-form__btn-icon fas fa-sign-out-alt"></i>
               <span className="login-form__btn-text">ورود</span>
-            </button>
+            </Button>
             <div className="login-form__password-setting">
               <label className="login-form__password-remember">
-                <input className="login-form__password-checkbox" type="checkbox" />
+                <input
+                  className="login-form__password-checkbox"
+                  type="checkbox"
+                />
                 <span className="login-form__password-text">
                   مرا به خاطر داشته باش
                 </span>
