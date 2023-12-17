@@ -1,6 +1,7 @@
 import React from 'react';
 import { useReducer } from 'react';
 import './Input.css';
+import validator from '../../Validators/Validator';
 
 const inputReducer = (state, action) => {
   switch (action.type) {
@@ -8,7 +9,7 @@ const inputReducer = (state, action) => {
       return {
         ...state,
         value: action.value,
-        isValid: action.isValid,
+        isValid: validator(action.value, action.validations),
       };
     }
     default: {
@@ -18,6 +19,8 @@ const inputReducer = (state, action) => {
 };
 
 export default function Input(props) {
+  console.log(props.validations);
+
   const [mainInput, dispatch] = useReducer(inputReducer, {
     value: '',
     isValid: false,
@@ -29,6 +32,7 @@ export default function Input(props) {
       type: 'CHANGE',
       value: event.target.value,
       isValid: true,
+      validations: props.validations,
     });
   };
 
@@ -37,14 +41,18 @@ export default function Input(props) {
       <input
         type={props.type}
         placeholder={props.placeholder}
-        className={`${props.className} ${mainInput.isValid ? 'success' : 'error'}`}
+        className={`${props.className} ${
+          mainInput.isValid ? 'success' : 'error'
+        }`}
         onChange={onChangeHandler}
         value={mainInput.value}
       />
     ) : (
       <textarea
         placeholder={props.placeholder}
-        className={`${props.className} ${mainInput.isValid ? 'success' : 'error'}`}
+        className={`${props.className} ${
+          mainInput.isValid ? 'success' : 'error'
+        }`}
         onChange={onChangeHandler}
         value={mainInput.value}
       />

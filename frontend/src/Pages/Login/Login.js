@@ -6,13 +6,18 @@ import Footer from '../../Components/Footer/Footer';
 import Input from '../../Components/Form/Input';
 import { Link } from 'react-router-dom';
 import Button from '../../Components/Form/Button';
+import {
+  requiredValidator,
+  minValidator,
+  maxValidator,
+  emailValidator,
+} from '../../Validators/rules';
 
 export default function Login() {
-
-  const userLogIn =(event) => {
-    event.preventDefault()
+  const userLogIn = (event) => {
+    event.preventDefault();
     console.log('Login');
-  }
+  };
 
   return (
     <>
@@ -37,6 +42,11 @@ export default function Login() {
                 type="text"
                 placeholder="نام کاربری یا آدرس ایمیل"
                 element="input"
+                validations={[
+                  requiredValidator(),
+                  minValidator(8),
+                  maxValidator(20)
+                ]}
               />
               <i className="login-form__username-icon fa fa-user"></i>
             </div>
@@ -46,10 +56,20 @@ export default function Login() {
                 type="password"
                 placeholder="رمز عبور"
                 element="input"
+                validations={[
+                  requiredValidator(),
+                  minValidator(8),
+                  maxValidator(18),
+                  emailValidator()
+                ]}
               />
               <i className="login-form__password-icon fa fa-lock-open"></i>
             </div>
-            <Button className="login-form__btn" type="submit" onClick={userLogIn}>
+            <Button
+              className="login-form__btn"
+              type="submit"
+              onClick={userLogIn}
+            >
               <i className="login-form__btn-icon fas fa-sign-out-alt"></i>
               <span className="login-form__btn-text">ورود</span>
             </Button>
