@@ -108,10 +108,10 @@
   position: relative;
 }
 .login-form__btn-success{
-  background-color: #2bce56;
+  background-color: #2bce56 !important;
 }
 .login-form__btn-error{
-  background-color: red;
+  background-color: red !important;
 }
 .login-form__btn-icon {
   color: var(--white-color);
