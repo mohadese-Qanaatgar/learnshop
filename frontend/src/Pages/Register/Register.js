@@ -37,9 +37,26 @@ export default function Register() {
     },
     false
   );
+  console.log(formState);
 
   const registerNewUser = (event) => {
     event.preventDefault();
+    const newUserInfos = {
+      name: formState.inputs.name.value,
+      username: formState.inputs.username.value,
+      email: formState.inputs.email.value,
+      password: formState.inputs.password.value,
+      confirmPassword: formState.inputs.password.value,
+    };
+    fetch('http://localhost:4000/v1/auth/register' , {
+      method:'POST',
+      headers:{
+        'Content-Type':'application/json'
+      },
+      body:JSON.stringify(newUserInfos)
+    }).then(res => res.json())
+    .then(result => console.log(result.accessToken))
+    
     console.log("User Register");
   };
 
@@ -74,7 +91,7 @@ export default function Register() {
                 validations={[
                   requiredValidator(),
                   minValidator(6),
-                  maxValidator(20)
+                  maxValidator(20),
                 ]}
               />
               <i className="login-form__username-icon fa fa-user"></i>
@@ -90,7 +107,7 @@ export default function Register() {
                 validations={[
                   requiredValidator(),
                   minValidator(8),
-                  maxValidator(20)
+                  maxValidator(20),
                 ]}
               />
               <i className="login-form__username-icon fa fa-user"></i>
@@ -106,7 +123,7 @@ export default function Register() {
                 validations={[
                   requiredValidator(),
                   maxValidator(25),
-                  emailValidator()
+                  emailValidator(),
                 ]}
               />
               <i className="login-form__password-icon fa fa-envelope"></i>
@@ -122,7 +139,7 @@ export default function Register() {
                 validations={[
                   requiredValidator(),
                   minValidator(8),
-                  maxValidator(18)
+                  maxValidator(18),
                 ]}
               />
               <i className="login-form__password-icon fa fa-lock-open"></i>
@@ -136,6 +153,7 @@ export default function Register() {
               type="submit"
               onClick={registerNewUser}
               disabled={false}
+              // disabled={!formState.isFormValid}
             >
               <i className="login-form__btn-icon fa fa-user-plus"></i>
               <span className="login-form__btn-text">عضویت</span>
