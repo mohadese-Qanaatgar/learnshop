@@ -1,4 +1,4 @@
-import React, { useReducer } from "react";
+import React, { useReducer , useContext } from "react";
 import { Link } from "react-router-dom";
 import Footer from "../../Components/Footer/Footer";
 import Button from "../../Components/Form/Button";
@@ -6,6 +6,7 @@ import Input from "../../Components/Form/Input";
 import Navbar from "../../Components/Navbar/Navbar";
 import Topbar from "../../Components/Topbar/Topbar";
 import { useForm } from "../../hooks/useForm";
+import AuthContext from "../../Context/authContext.js";
 
 import {
   requiredValidator,
@@ -17,6 +18,7 @@ import {
 import "./Login.css";
 
 export default function Login() {
+  const authContext = useContext(AuthContext)
   const [formState, onInputHandler] = useForm(
     {
       username: {
@@ -53,6 +55,7 @@ export default function Login() {
         return res.json()
       }
       console.log(res)}).then(result => {
+        authContext.login({},result.accessToken)
         console.log(result);
       })
       .catch(err => {
