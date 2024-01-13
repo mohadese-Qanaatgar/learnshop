@@ -36,17 +36,29 @@ export default function Login() {
   const userLogin = (event) => {
     event.preventDefault();
 
-    // const userData = {
-    //   identifier: formState.inputs.username.value,
-    //   password: formState.inputs.password.value,
-    // };
-    // fetch('http://localhost:4000/v1/auth/login' ,{
-    //   method:'POST',
-    //   headers :{
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify(userData)
-    // }).then(res => console.log(res))
+    const userData = {
+      identifier: formState.inputs.username.value,
+      password: formState.inputs.password.value,
+    };
+    fetch('http://localhost:4000/v1/auth/login' ,{
+      method:'POST',
+      headers :{
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userData)
+    }).then(res => {
+      if(!res.ok){
+        return res.text().then(text => {throw new Error(text)})
+      }else {
+        return res.json()
+      }
+      console.log(res)}).then(result => {
+        console.log(result);
+      })
+      .catch(err => {
+        console.log('err => ',err);
+        alert('همچین کاربری وجود ندارد!')
+      })
     
   };
 
