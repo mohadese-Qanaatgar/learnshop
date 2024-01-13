@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useReducer } from "react";
 import { Link } from "react-router-dom";
 import Footer from "../../Components/Footer/Footer";
 import Button from "../../Components/Form/Button";
@@ -14,7 +14,7 @@ import {
   emailValidator,
 } from "../../Validators/rules.js";
 
-import './Login.css';
+import "./Login.css";
 
 export default function Login() {
   const [formState, onInputHandler] = useForm(
@@ -35,7 +35,19 @@ export default function Login() {
 
   const userLogin = (event) => {
     event.preventDefault();
-    console.log("User Login");
+
+    // const userData = {
+    //   identifier: formState.inputs.username.value,
+    //   password: formState.inputs.password.value,
+    // };
+    // fetch('http://localhost:4000/v1/auth/login' ,{
+    //   method:'POST',
+    //   headers :{
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify(userData)
+    // }).then(res => console.log(res))
+    
   };
 
   return (
@@ -67,6 +79,7 @@ export default function Login() {
                   requiredValidator(),
                   minValidator(8),
                   maxValidator(20),
+                  // emailValidator()
                 ]}
                 onInputHandler={onInputHandler}
               />

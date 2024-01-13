@@ -37,7 +37,7 @@ export default function App() {
       })
     }
     console.log(localStorageData);
-  },[login])
+  },[token,login])
 
   return (
     <AuthContext.Provider
