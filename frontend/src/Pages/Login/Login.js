@@ -1,4 +1,4 @@
-import React, { useReducer , useContext } from "react";
+import React, { useReducer, useContext } from "react";
 import { Link } from "react-router-dom";
 import Footer from "../../Components/Footer/Footer";
 import Button from "../../Components/Form/Button";
@@ -7,6 +7,8 @@ import Navbar from "../../Components/Navbar/Navbar";
 import Topbar from "../../Components/Topbar/Topbar";
 import { useForm } from "../../hooks/useForm";
 import AuthContext from "../../Context/authContext.js";
+import Swal from "sweetalert";
+import { useNavigate } from "react-router-dom";
 
 import {
   requiredValidator,
@@ -18,7 +20,8 @@ import {
 import "./Login.css";
 
 export default function Login() {
-  const authContext = useContext(AuthContext)
+  const navigate = useNavigate()
+  const authContext = useContext(AuthContext);
   const [formState, onInputHandler] = useForm(
     {
       username: {
@@ -33,7 +36,8 @@ export default function Login() {
     false
   );
 
-  console.log(formState);
+  
+ 
 
   const userLogin = (event) => {
     event.preventDefault();
@@ -42,27 +46,41 @@ export default function Login() {
       identifier: formState.inputs.username.value,
       password: formState.inputs.password.value,
     };
-    fetch('http://localhost:4000/v1/auth/login' ,{
-      method:'POST',
-      headers :{
+    fetch("http://localhost:4000/v1/auth/login", {
+      method: "POST",
+      headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(userData)
-    }).then(res => {
-      if(!res.ok){
-        return res.text().then(text => {throw new Error(text)})
-      }else {
-        return res.json()
-      }
-      console.log(res)}).then(result => {
-        authContext.login({},result.accessToken)
+      body: JSON.stringify(userData),
+    })
+      .then((res) => {
+        if (!res.ok) {
+          return res.text().then((text) => {
+            throw new Error(text);
+          });
+        } else {
+          return res.json();
+        }
+        console.log(res);
+      })
+      .then((result) => {
+        Swal({
+          text: "با موفقیت وارد شدید",
+          icon: "success",
+          button: "ورود به پنل",
+        }).then(value => {
+          navigate('/')
+        })
+        authContext.login({}, result.accessToken);
         console.log(result);
       })
-      .catch(err => {
-        console.log('err => ',err);
-        alert('همچین کاربری وجود ندارد!')
-      })
-    
+      .catch((err) => {
+        Swal({
+          text: "همچین کاربری وجود ندارد",
+          icon: "error",
+          button: "تلاش دوباره",
+        });
+      });
   };
 
   return (

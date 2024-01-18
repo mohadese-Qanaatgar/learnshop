@@ -156,3 +156,9 @@
   margin-top: 1rem;
 }
 /* ============================== Login Style ============================== */
+
+
+.swal-footer {
+  display: flex;
+  justify-content: center;
+}
