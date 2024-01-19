@@ -1,11 +1,20 @@
-import React ,{useContext} from 'react';
-import AuthContext from '../../Context/authContext';
-import { Link } from 'react-router-dom';
-import './Navbar.css';
+import React, { useContext, useState, useEffect } from "react";
+import AuthContext from "../../Context/authContext";
+import { Link } from "react-router-dom";
+import "./Navbar.css";
 
 export default function Navbar() {
+  const [allMenus, setAllMenus] = useState([]);
 
-  const authContext = useContext(AuthContext)
+  useEffect(() => {
+    fetch("http://localhost:4000/v1/menus")
+      .then((res) => res.json())
+      .then((menus) => {
+        setAllMenus(menus);
+      });
+  }, []);
+
+  const authContext = useContext(AuthContext);
   // console.log(authContext);
   return (
     <div className="main-header">
@@ -24,40 +33,32 @@ export default function Navbar() {
                   صفحه اصلی
                 </a>
               </li>
+              {allMenus.map((menu) => (
+                <li className="main-header__item">
+                  <Link to={menu.href} className="main-header__link">
+                    {menu.title}
+                    {menu.submenus.length !== 0 && (
+                      <>
+                        <i className="fas fa-angle-down main-header__link-icon"></i>
+                        <ul className="main-header__dropdown">
+                          {menu.submenus.map((submenu) => (
+                            <li className="main-header__dropdown-item">
+                              <Link
+                                to={submenu.href}
+                                className="main-header__dropdown-link"
+                              >
+                               {submenu.title}
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      </>
+                    )}
+                  </Link>
+                </li>
+              ))}
 
-              <li className="main-header__item">
-                <a href="#" className="main-header__link">
-                  فرانت اند
-                  <i className="fas fa-angle-down main-header__link-icon"></i>
-                  <ul className="main-header__dropdown">
-                    <li className="main-header__dropdown-item">
-                      <a href="#" className="main-header__dropdown-link">
-                        آموزش Html
-                      </a>
-                    </li>
-                    <li className="main-header__dropdown-item">
-                      <a href="#" className="main-header__dropdown-link">
-                        آموزش Css
-                      </a>
-                    </li>
-                    <li className="main-header__dropdown-item">
-                      <a href="#" className="main-header__dropdown-link">
-                        آموزش جاوا اسکریپت
-                      </a>
-                    </li>
-                    <li className="main-header__dropdown-item">
-                      <a href="#" className="main-header__dropdown-link">
-                        آموزش FlexBox
-                      </a>
-                    </li>
-                    <li className="main-header__dropdown-item">
-                      <a href="#" className="main-header__dropdown-link">
-                        آموزش جامع ری‌اکت
-                      </a>
-                    </li>
-                  </ul>
-                </a>
-              </li>
+              {/* 
               <li className="main-header__item">
                 <a href="#" className="main-header__link">
                   امنیت
@@ -136,7 +137,7 @@ export default function Navbar() {
                 <a href="#" className="main-header__link">
                   مهارت های نرم
                 </a>
-              </li>
+              </li> */}
             </ul>
           </div>
 
@@ -149,18 +150,15 @@ export default function Navbar() {
             </a>
             {authContext.isLoggedIn && authContext.userInfos ? (
               <Link to="#" className="main-header__profile">
-              <span className="main-header__profile-text">
-                {authContext.userInfos.name}
-              </span>
-            </Link>
+                <span className="main-header__profile-text">
+                  {authContext.userInfos.name}
+                </span>
+              </Link>
             ) : (
               <Link to="/login" className="main-header__profile">
-              <span className="main-header__profile-text">
-                ورود/ثبت نام
-              </span>
-            </Link>
+                <span className="main-header__profile-text">ورود/ثبت نام</span>
+              </Link>
             )}
-            
           </div>
         </div>
       </div>
