@@ -36,7 +36,7 @@ export default function App() {
         setUserInfos(userData)
       })
     }
-    console.log(localStorageData);
+    // console.log(localStorageData);
   },[token,login])
 
   return (

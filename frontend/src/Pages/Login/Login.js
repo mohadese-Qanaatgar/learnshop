@@ -22,7 +22,7 @@ import "./Login.css";
 
 export default function Login() {
   const navigate = useNavigate();
-  const [isGoogleRecaptchaVerify , setIsGoogleRecaptchaVerify] = useState(false)
+  const [isGoogleRecaptchaVerify, setIsGoogleRecaptchaVerify] = useState(false);
   const authContext = useContext(AuthContext);
   const [formState, onInputHandler] = useForm(
     {
@@ -82,9 +82,9 @@ export default function Login() {
       });
   };
   const onChangeHandler = () => {
-  console.log('ok');  
-  setIsGoogleRecaptchaVerify(true)
-  }
+    console.log("ok");
+    setIsGoogleRecaptchaVerify(true);
+  };
 
   return (
     <>
@@ -138,16 +138,21 @@ export default function Login() {
 
               <i className="login-form__password-icon fa fa-lock-open"></i>
             </div>
-            <ReCAPTCHA sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI" onChange={onChangeHandler} />
+            <div className="login-form__password recaptcha-parent">
+              <ReCAPTCHA
+                sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
+                onChange={onChangeHandler}
+              />
+            </div>
             <Button
               className={`login-form__btn ${
-                (formState.isFormValid && isGoogleRecaptchaVerify)
+                formState.isFormValid && isGoogleRecaptchaVerify
                   ? "login-form__btn-success"
                   : "login-form__btn-error"
               }`}
               type="submit"
               onClick={userLogin}
-              disabled={(!formState.isFormValid || !isGoogleRecaptchaVerify)}
+              disabled={!formState.isFormValid || !isGoogleRecaptchaVerify}
             >
               <i className="login-form__btn-icon fas fa-sign-out-alt"></i>
               <span className="login-form__btn-text">ورود</span>

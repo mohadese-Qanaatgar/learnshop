@@ -6,7 +6,7 @@ import './Navbar.css';
 export default function Navbar() {
 
   const authContext = useContext(AuthContext)
-  console.log(authContext);
+  // console.log(authContext);
   return (
     <div className="main-header">
       <div className="container-fluid">
