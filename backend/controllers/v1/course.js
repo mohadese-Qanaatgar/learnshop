@@ -168,7 +168,7 @@ exports.getAll = async (req, res, next) => {
       allCourses.push({
         ...course,
         categoryID: course.categoryID,
-        creator: course.creator.name,
+        creator: course.creator?.name || "creator not found",
         registers: courseRegisters.length,
         courseAverageScore: Math.floor(
           courseTotalScore / (courseScores.length + 1)
