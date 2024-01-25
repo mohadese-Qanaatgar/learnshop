@@ -19,13 +19,14 @@ export default function CourseInfo() {
   const { courseName } = useParams();
 
   useEffect(() => {
-    console.log(JSON.parse(localStorage.getItem("user")).token);
 
+    const localStorageData = JSON.parse(localStorage.getItem('user')
+    )
     fetch(`http://localhost:4000/v1/courses/${courseName}`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${
-          JSON.parse(localStorage.getItem("user")).token
+          localStorageData === null ? null : localStorageData.token
         }`,
       },
     })
@@ -37,7 +38,6 @@ export default function CourseInfo() {
         setCreatedAt(courseInfo.createdAt);
         setUpdatedAt(courseInfo.updatedAt);
         setCourseDetailes(courseInfo);
-        console.log(updatedAt);
       });
   }, []);
   return (
@@ -294,7 +294,7 @@ export default function CourseInfo() {
                   </p>
                 </div>
                 {/*Finish teacher detailes */}
-                <CommentsTextArea />
+                <CommentsTextArea comments={comments}/>
               </div>
             </div>
             <div className="col-4">
