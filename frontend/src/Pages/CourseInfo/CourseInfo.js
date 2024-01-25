@@ -294,7 +294,7 @@ export default function CourseInfo() {
                   </p>
                 </div>
                 {/*Finish teacher detailes */}
-                <CommentsTextArea />
+                <CommentsTextArea comments={comments}/>
               </div>
             </div>
             <div className="col-4">

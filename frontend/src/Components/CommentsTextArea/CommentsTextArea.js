@@ -1,7 +1,7 @@
 import React from 'react';
 import './CommentsTextArea.css';
 
-export default function CommentsTextArea() {
+export default function CommentsTextArea({comments}) {
   return (
     <div className="comments">
       <span className="comments__title">دیدگاهتان را بنویسید</span>
