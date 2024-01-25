@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import './CourseInfo.css';
 import Topbar from '../../Components/Topbar/Topbar';
 import Navbar from '../../Components/Navbar/Navbar';
@@ -10,6 +10,10 @@ import Accordion from 'react-bootstrap/Accordion';
 import { useParams } from 'react-router-dom';
 
 export default function CourseInfo() {
+
+  const [comments , setComments] = useState([])
+  const [sessions ,setSessions] = useState([])
+  const [courseDetailes , setCourseDetailes] = useState({})
 
   const {courseName }= useParams()
 
@@ -23,7 +27,12 @@ export default function CourseInfo() {
         'Authorization' : `Bearer ${JSON.parse(localStorage.getItem('user')).token}`
       }
     }).then(res => res.json())
-    .then(courseInfo => console.log(courseInfo))
+    .then(courseInfo => {
+     console.log(courseInfo);
+     setComments(courseInfo.comments)
+     setSessions(courseInfo.sessions)
+     setCourseDetailes(courseInfo)
+    })
   },[])
   return (
 
@@ -56,12 +65,7 @@ export default function CourseInfo() {
                 آموزش 20 کتابخانه جاوااسکریپت برای بازار کار
               </h1>
               <p className="course-info__text">
-                امروزه کتابخانه‌ها کد نویسی را خیلی آسان و لذت بخش تر کرده اند.
-                به قدری که حتی امروزه هیچ شرکت برنامه نویسی پروژه های خود را با
-                Vanilla Js پیاده سازی نمی کند و همیشه از کتابخانه ها و فریمورک
-                های موجود استفاده می کند. پس شما هم اگه میخواید یک برنامه نویس
-                عالی فرانت اند باشید، باید کتابخانه های کاربردی که در بازار کار
-                استفاده می شوند را به خوبی بلد باشید
+                {courseDetailes.description}
               </p>
               <div className="course-info__social-media">
                 <a href="#" className="course-info__social-media-item">
