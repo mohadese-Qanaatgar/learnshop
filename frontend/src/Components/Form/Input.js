@@ -19,7 +19,7 @@ const inputReducer = (state, action) => {
 };
 
 export default function Input(props) {
-  console.log(props.validations);
+  // console.log(props.validations);
 
   const [mainInput, dispatch] = useReducer(inputReducer, {
     value: '',
