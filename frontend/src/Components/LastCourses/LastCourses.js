@@ -1,9 +1,17 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './LastCourses.css';
 import SectionHeader from '../SectionHeader/SectionHeader';
 import CourseBox from '../CourseBox/CourseBox';
 
 export default function LastCourses() {
+  const [courses , setCourses] = useState([])
+
+  useEffect(() => {
+    fetch('http://localhost:4000/v1/courses').then(res => res.json())
+    .then(allCourses => {
+      setCourses(allCourses)
+    })
+  },[])
   return (
     <>
       <div className="courses">
@@ -17,42 +25,9 @@ export default function LastCourses() {
           <div className="courses-content">
             <div className="container">
               <div className="row">
-                <CourseBox
-                  title="دوره پروژه محور متخصص جنگو"
-                  teacher="رضا دولتی"
-                  users="500"
-                  price="1,000,000"
-                />
-                <CourseBox
-                  title="دوره پروژه محور متخصص جنگو"
-                  teacher="رضا دولتی"
-                  users="500"
-                  price="1,000,000"
-                />
-                <CourseBox
-                  title="دوره پروژه محور متخصص جنگو"
-                  teacher="رضا دولتی"
-                  users="500"
-                  price="1,000,000"
-                />
-                <CourseBox
-                  title="دوره پروژه محور متخصص جنگو"
-                  teacher="رضا دولتی"
-                  users="500"
-                  price="1,000,000"
-                />
-                <CourseBox
-                  title="دوره پروژه محور متخصص جنگو"
-                  teacher="رضا دولتی"
-                  users="500"
-                  price="1,000,000"
-                />
-                <CourseBox
-                  title="دوره پروژه محور متخصص جنگو"
-                  teacher="رضا دولتی"
-                  users="500"
-                  price="1,000,000"
-                />
+                {courses.splice(0,6).map((course) => (
+                <CourseBox {...course}/>
+                ))}
               </div>
             </div>
           </div>
