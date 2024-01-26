@@ -19,12 +19,11 @@ export default function CourseInfo() {
   const { courseName } = useParams();
 
   useEffect(() => {
-    console.log(JSON.parse(localStorage.getItem("user")).token);
 
     fetch(`http://localhost:4000/v1/courses/${courseName}`, {
       method: "GET",
       headers: {
-        Authorization: `Bearer ${
+        "Authorization": `Bearer ${
           JSON.parse(localStorage.getItem("user")).token
         }`,
       },
@@ -37,7 +36,7 @@ export default function CourseInfo() {
         setCreatedAt(courseInfo.createdAt);
         setUpdatedAt(courseInfo.updatedAt);
         setCourseDetailes(courseInfo);
-        console.log(updatedAt);
+        console.log(courseInfo);
       });
   }, []);
   return (
