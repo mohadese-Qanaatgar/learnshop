@@ -11,6 +11,7 @@ export default function Category() {
     <>
       <Topbar />
       <Navbar />
+      
       <section className="courses">
         <div className="container">
           <div className="courses-top-bar">
