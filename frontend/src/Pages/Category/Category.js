@@ -1,12 +1,26 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './Category.css';
 import Topbar from '../../Components/Topbar/Topbar';
 import Navbar from '../../Components/Navbar/Navbar';
 import Footer from '../../Components/Footer/Footer';
 import CourseBox from '../../Components/CourseBox/CourseBox'
 import Pagination from '../../Components/Pagination/Pagination';
+import { useParams } from 'react-router-dom';
 
 export default function Category() {
+
+  const [courses , setCourses] = useState([])
+  const {categoryName} = useParams()
+
+  useEffect(() => {
+    fetch(`http://localhost:4000/v1/courses/category/${categoryName}`)
+    .then(res => res.json())
+    .then(allCourses => {
+      console.log(allCourses);
+      setCourses(allCourses)
+    })
+  } ,[])
+
   return (
     <>
       <Topbar />
@@ -64,9 +78,9 @@ export default function Category() {
           <div className="courses-content">
             <div className="container">
               <div className="row">
-                <CourseBox title='دوره پروژه محور جنگو' teacher='محمد محمدی' users='500' price='1,000,000'/>
-                <CourseBox title='دوره پروژه محور جنگو' teacher='محمد محمدی' users='500' price='1,000,000'/>
-                <CourseBox title='دوره پروژه محور جنگو' teacher='محمد محمدی' users='500' price='1,000,000'/>
+                {courses.map(course => (
+                <CourseBox {...course}/>
+                ))}
               </div>
             </div>
           </div>
