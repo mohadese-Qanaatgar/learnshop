@@ -8,23 +8,34 @@ import CourseDetailBox from "../../Components/CourseDetailBox/CourseDetailBox";
 import CommentsTextArea from "../../Components/CommentsTextArea/CommentsTextArea";
 import Accordion from "react-bootstrap/Accordion";
 import { useParams } from "react-router-dom";
+import swal from 'sweetalert'
 
 export default function CourseInfo() {
   const [comments, setComments] = useState([]);
   const [sessions, setSessions] = useState([]);
   const [createdAt, setCreatedAt] = useState("");
   const [updatedAt, setUpdatedAt] = useState("");
+  const [score, setScore] = useState(5);
   const [courseDetailes, setCourseDetailes] = useState({});
 
   const { courseName } = useParams();
 
   useEffect(() => {
+<<<<<<< HEAD
 
     fetch(`http://localhost:4000/v1/courses/${courseName}`, {
       method: "GET",
       headers: {
         "Authorization": `Bearer ${
           JSON.parse(localStorage.getItem("user")).token
+=======
+    const localStorageData = JSON.parse(localStorage.getItem("user"));
+    fetch(`http://localhost:4000/v1/courses/${courseName}`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${
+          localStorageData === null ? null : localStorageData.token
+>>>>>>> dynamic
         }`,
       },
     })
@@ -36,9 +47,37 @@ export default function CourseInfo() {
         setCreatedAt(courseInfo.createdAt);
         setUpdatedAt(courseInfo.updatedAt);
         setCourseDetailes(courseInfo);
+<<<<<<< HEAD
         console.log(courseInfo);
+=======
+>>>>>>> dynamic
       });
   }, []);
+
+  const submitComment = (newCommentBody) => {
+    const localStorageData = JSON.parse(localStorage.getItem("user"));
+
+    fetch(`http://localhost:4000/v1/comments`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "Application/json",
+        Authorization: `Bearer ${localStorageData.token}`,
+      },
+      body: JSON.stringify({
+        body: newCommentBody,
+        courseShortName: courseName,
+        score: score,
+      }),
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        console.log(result)});
+        swal ( {
+          title : 'کامنت شما ثبت شد',
+          icon: 'success',
+          button : 'تایید'
+        })
+  };
   return (
     <>
       <Topbar />
@@ -293,7 +332,14 @@ export default function CourseInfo() {
                   </p>
                 </div>
                 {/*Finish teacher detailes */}
+<<<<<<< HEAD
                 <CommentsTextArea comments={comments}/>
+=======
+                <CommentsTextArea
+                  comments={comments}
+                  submitComment={submitComment}
+                />
+>>>>>>> dynamic
               </div>
             </div>
             <div className="col-4">
