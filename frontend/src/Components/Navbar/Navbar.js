@@ -11,7 +11,7 @@ export default function Navbar() {
       .then((res) => res.json())
       .then((menus) => {
         setAllMenus(menus);
-        console.log(allMenus);
+        // console.log(allMenus);
       });
   }, []);
 
