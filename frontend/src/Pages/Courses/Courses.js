@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './Courses.css'
 import Topbar from '../../Components/Topbar/Topbar';
 import Navbar from '../../Components/Navbar/Navbar';
@@ -9,6 +9,16 @@ import Pagination from '../../Components/Pagination/Pagination'
 
 
 export default function Courses() {
+
+  const [courses , setCourses] = useState([])
+
+  useEffect(() => {
+
+    fetch(`http://localhost:4000/v1/courses`)
+    .then(res => res.json())
+    .then(allCourses => setCourses(allCourses))
+  } ,[])
+
   return (
     <>
     <Topbar/>
@@ -29,48 +39,9 @@ export default function Courses() {
             <div className='courses-content'>
                 <div className='container'>
                     <div className='row'>
-                        <CourseBox
-                        title='متخصص جنکو'
-                        teacher='محمد محمدی'
-                        price='1,500,000'
-                        users='500'
-                        />
-                        <CourseBox
-                        title='متخصص جنکو'
-                        teacher='محمد محمدی'
-                        price='1,500,000'
-                        users='500'
-                        />
-                        <CourseBox
-                        title='متخصص جنکو'
-                        teacher='محمد محمدی'
-                        price='1,500,000'
-                        users='500'
-                        />
-                        <CourseBox
-                        title='متخصص جنکو'
-                        teacher='محمد محمدی'
-                        price='1,500,000'
-                        users='500'
-                        />
-                        <CourseBox
-                        title='متخصص جنکو'
-                        teacher='محمد محمدی'
-                        price='1,500,000'
-                        users='500'
-                        />
-                        <CourseBox
-                        title='متخصص جنکو'
-                        teacher='محمد محمدی'
-                        price='1,500,000'
-                        users='500'
-                        />
-                        <CourseBox
-                        title='متخصص جنکو'
-                        teacher='محمد محمدی'
-                        price='1,500,000'
-                        users='500'
-                        />
+                      {courses.map(course => (
+                        <CourseBox {...course}/>
+                      ))}
                         <Pagination/>
                     </div>
                 </div>
