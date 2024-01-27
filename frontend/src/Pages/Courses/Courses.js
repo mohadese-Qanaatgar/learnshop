@@ -13,7 +13,6 @@ export default function Courses() {
   const [courses , setCourses] = useState([])
 
   useEffect(() => {
-
     fetch(`http://localhost:4000/v1/courses`)
     .then(res => res.json())
     .then(allCourses => setCourses(allCourses))
