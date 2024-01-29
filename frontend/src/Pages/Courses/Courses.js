@@ -11,11 +11,12 @@ import Pagination from '../../Components/Pagination/Pagination'
 export default function Courses() {
 
   const [courses , setCourses] = useState([])
+  const [shownCourses , setShownCourses] =useState([])
 
   useEffect(() => {
     fetch(`http://localhost:4000/v1/courses`)
     .then(res => res.json())
-    .then(allCourses => setCourses(allCourses))
+    .then(allCourses => {setCourses(allCourses)})
   } ,[])
 
   return (
@@ -38,10 +39,15 @@ export default function Courses() {
             <div className='courses-content'>
                 <div className='container'>
                     <div className='row'>
-                      {courses.map(course => (
+                      {shownCourses.map(course => (
                         <CourseBox {...course}/>
                       ))}
-                        <Pagination/>
+                        <Pagination
+                        items={courses}
+                        itemsCount={3}
+                        pathname='/courses'
+                        setShownCourses={setShownCourses}
+                        />
                     </div>
                 </div>
             </div>

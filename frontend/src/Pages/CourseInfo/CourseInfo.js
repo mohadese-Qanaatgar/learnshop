@@ -17,25 +17,18 @@ export default function CourseInfo() {
   const [updatedAt, setUpdatedAt] = useState("");
   const [score, setScore] = useState(5);
   const [courseDetailes, setCourseDetailes] = useState({});
+  const [courseTeacher , setCourseTeacher] =useState({})
 
   const { courseName } = useParams();
 
   useEffect(() => {
-<<<<<<< HEAD
 
-    fetch(`http://localhost:4000/v1/courses/${courseName}`, {
-      method: "GET",
-      headers: {
-        "Authorization": `Bearer ${
-          JSON.parse(localStorage.getItem("user")).token
-=======
     const localStorageData = JSON.parse(localStorage.getItem("user"));
     fetch(`http://localhost:4000/v1/courses/${courseName}`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${
           localStorageData === null ? null : localStorageData.token
->>>>>>> dynamic
         }`,
       },
     })
@@ -47,10 +40,8 @@ export default function CourseInfo() {
         setCreatedAt(courseInfo.createdAt);
         setUpdatedAt(courseInfo.updatedAt);
         setCourseDetailes(courseInfo);
-<<<<<<< HEAD
+        setCourseTeacher(courseInfo.creator)
         console.log(courseInfo);
-=======
->>>>>>> dynamic
       });
   }, []);
 
@@ -307,13 +298,13 @@ export default function CourseInfo() {
                   <div className="techer-details__header">
                     <div className="techer-details__header-right">
                       <img
-                        src="/images/info/teacher.jfif"
+                        src={courseTeacher.profile}
                         alt="Teacher Profile"
                         className="techer-details__header-img"
                       />
                       <div className="techer-details__header-titles">
                         <a href="#" className="techer-details__header-link">
-                          محمدامین سعیدی راد
+                          {courseTeacher.name}
                         </a>
                         <span className="techer-details__header-skill">
                           Front End & Back End Developer
@@ -322,7 +313,9 @@ export default function CourseInfo() {
                     </div>
                     <div className="techer-details__header-left">
                       <i className="fas fa-chalkboard-teacher techer-details__header-icon"></i>
-                      <span className="techer-details__header-name">مدرس</span>
+                      <span className="techer-details__header-name">
+                        {courseTeacher.role}
+                        </span>
                     </div>
                   </div>
                   <p className="techer-details__footer">
@@ -332,14 +325,11 @@ export default function CourseInfo() {
                   </p>
                 </div>
                 {/*Finish teacher detailes */}
-<<<<<<< HEAD
-                <CommentsTextArea comments={comments}/>
-=======
+
                 <CommentsTextArea
                   comments={comments}
                   submitComment={submitComment}
                 />
->>>>>>> dynamic
               </div>
             </div>
             <div className="col-4">
