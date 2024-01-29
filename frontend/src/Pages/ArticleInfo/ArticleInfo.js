@@ -1,28 +1,46 @@
-import React from 'react';
-import './ArticleInfo.css';
-import Topbar from '../../Components/Topbar/Topbar';
-import Navbar from '../../Components/Navbar/Navbar';
-import Footer from '../../Components/Footer/Footer';
-import BreadCrump from '../../Components/BreadCrump/BreadCrump';
-import CommentsTextArea from '../../Components/CommentsTextArea/CommentsTextArea';
+import React, { useEffect, useState } from "react";
+import "./ArticleInfo.css";
+import Topbar from "../../Components/Topbar/Topbar";
+import Navbar from "../../Components/Navbar/Navbar";
+import Footer from "../../Components/Footer/Footer";
+import BreadCrump from "../../Components/BreadCrump/BreadCrump";
+import CommentsTextArea from "../../Components/CommentsTextArea/CommentsTextArea";
+import { useParams } from "react-router-dom";
 
 export default function ArticleInfo() {
+  const [articleDetailes, setArticleDetailes] = useState([]);
+  const [articleCategory, setArticleCategory] = useState([]);
+  const [articleCreator, setArticleCreator] = useState([]);
+  const [articleCreatedAt , setArticleCreatedAt] =useState([])
+  const { articleName } = useParams();
+
+  useEffect(() => {
+    fetch(`http://localhost:4000/v1/articles/${articleName}`)
+      .then((res) => res.json())
+      .then((articleInfo) => {
+        console.log(articleInfo);
+        setArticleDetailes(articleInfo);
+        setArticleCategory(articleInfo.categoryID);
+        setArticleCreator(articleInfo.creator);
+        setArticleCreatedAt(articleInfo.createdAt)
+      });
+  }, []);
   return (
     <>
       <Topbar />
       <Navbar />
       <BreadCrump
         links={[
-          { id: 1, title: 'خانه', to: '/' },
+          { id: 1, title: "خانه", to: "/" },
           {
             id: 2,
-            title: 'مقاله ها',
-            to: '/category-info/frontend',
+            title: "مقاله ها",
+            to: "/category-info/frontend",
           },
           {
             id: 3,
-            title: 'ویو vs ریکت',
-            to: '/course-info/js-expert',
+            title: "ویو vs ریکت",
+            to: "/course-info/js-expert",
           },
         ]}
       />
@@ -31,34 +49,26 @@ export default function ArticleInfo() {
           <div class="row">
             <div class="col-8">
               <div class="article">
-                <h1 class="article__title">
-                  معرفی بهترین سایت آموزش جاوا اسکریپت [ تجربه محور ] + آموزش
-                  رایگان
-                </h1>
+                <h1 class="article__title">{articleDetailes.title}</h1>
                 <div class="article__header">
                   <div class="article-header__category article-header__item">
                     <i class="far fa-folder article-header__icon"></i>
                     <a href="#" class="article-header__text">
-                      جاوا اسکریپت
+                      {articleCategory.title}
                     </a>
                   </div>
                   <div class="article-header__category article-header__item">
                     <i class="far fa-user article-header__icon"></i>
                     <span class="article-header__text">
-                      {' '}
-                      ارسال شده توسط قدیر
-                    </span>
-                  </div>
-                  <div class="article-header__category article-header__item">
-                    <i class="far fa-clock article-header__icon"></i>
-                    <span class="article-header__text">
-                      {' '}
-                      ارسال شده توسط قدیر
+                      ارسال شده توسط {articleCreator.name}
                     </span>
                   </div>
                   <div class="article-header__category article-header__item">
                     <i class="far fa-eye article-header__icon"></i>
-                    <span class="article-header__text"> 2.14k بازدید</span>
+                    <span class="article-header__text"> 
+                    تاریخ انتشار :
+                    {articleCreatedAt.slice(0,10)}
+                    </span>
                   </div>
                 </div>
                 <img
@@ -229,7 +239,7 @@ export default function ArticleInfo() {
                     </div>
                   </div>
                 </div>
-                <CommentsTextArea />
+                {/* <CommentsTextArea /> */}
               </div>
             </div>
           </div>
