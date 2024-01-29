@@ -21,6 +21,7 @@ export default function LastArticles() {
           title="جدیدترین مقاله ها"
           desc="پیش به سوی ارتقای دانش"
           btnTitle="تمامی مقاله ها"
+          btnHref='articles/1'
         />
         <div className="articles__content">
           <div className="row">
