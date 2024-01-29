@@ -17,6 +17,7 @@ export default function CourseInfo() {
   const [updatedAt, setUpdatedAt] = useState("");
   const [score, setScore] = useState(5);
   const [courseDetailes, setCourseDetailes] = useState({});
+  const [courseTeacher , setCourseTeacher] =useState({})
 
   const { courseName } = useParams();
 
@@ -38,6 +39,8 @@ export default function CourseInfo() {
         setCreatedAt(courseInfo.createdAt);
         setUpdatedAt(courseInfo.updatedAt);
         setCourseDetailes(courseInfo);
+        setCourseTeacher(courseInfo.creator)
+        console.log(courseInfo);
       });
   }, []);
 
@@ -294,13 +297,13 @@ export default function CourseInfo() {
                   <div className="techer-details__header">
                     <div className="techer-details__header-right">
                       <img
-                        src="/images/info/teacher.jfif"
+                        src={courseTeacher.profile}
                         alt="Teacher Profile"
                         className="techer-details__header-img"
                       />
                       <div className="techer-details__header-titles">
                         <a href="#" className="techer-details__header-link">
-                          محمدامین سعیدی راد
+                          {courseTeacher.name}
                         </a>
                         <span className="techer-details__header-skill">
                           Front End & Back End Developer
@@ -309,7 +312,9 @@ export default function CourseInfo() {
                     </div>
                     <div className="techer-details__header-left">
                       <i className="fas fa-chalkboard-teacher techer-details__header-icon"></i>
-                      <span className="techer-details__header-name">مدرس</span>
+                      <span className="techer-details__header-name">
+                        {courseTeacher.role}
+                        </span>
                     </div>
                   </div>
                   <p className="techer-details__footer">
