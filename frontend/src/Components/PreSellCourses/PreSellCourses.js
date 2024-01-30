@@ -14,7 +14,7 @@ export default function PreSellCourses() {
     fetch(`http://localhost:4000/v1/courses/presell`)
     .then(res => res.json())
     .then(allPresellCourses => {
-      console.log(allPresellCourses);
+      // console.log(allPresellCourses);
       setPreSellCourses(allPresellCourses)
     })
   } ,[])
