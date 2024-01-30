@@ -165,9 +165,17 @@ export default function Category() {
                         </form>
                       </div>
                     </div>
-                    {shownCourses.map((course) => (
-                      <CourseBox {...course} />
-                    ))}
+                    {shownCourses.length === 0 ? (
+                      <div className="alert alert-warning">
+                        هیچ دوره ای برای {statusTitle} وجود ندارد
+                      </div>
+                    ) : (
+                      <>
+                        {shownCourses.map((course) => (
+                          <CourseBox {...course} />
+                        ))}
+                      </>
+                    )}
                     <Pagination
                       items={orderedCourses}
                       itemsCount={3}
