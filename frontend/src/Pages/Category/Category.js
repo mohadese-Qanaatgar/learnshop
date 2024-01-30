@@ -14,6 +14,7 @@ export default function Category() {
   const { categoryName } = useParams();
   const [status, setStatus] = useState("default");
   const [statusTitle, setStatusTitle] = useState("مرتب سازی بر اساس پیش فرض");
+  const [searchValue , setSearchValue] = useState('')
 
   useEffect(() => {
     fetch(`http://localhost:4000/v1/courses/category/${categoryName}`)
@@ -55,6 +56,12 @@ export default function Category() {
   const statusTitleChangeHandler = (event) => {
     setStatusTitle(event.target.textContent);
   };
+
+  const searchValueChangeHandler =(event) => {
+    setSearchValue(event.target.value)
+    const filteredCourses = courses.filter(course => course.name.includes(event.target.value))
+    setOrderedCourses(filteredCourses)
+  }
 
   return (
     <>
@@ -160,6 +167,8 @@ export default function Category() {
                             type="text"
                             className="courses-top-bar__input"
                             placeholder="جستجوی دوره ..."
+                            value={searchValue}
+                            onChange={searchValueChangeHandler}
                           />
                           <i className="fas fa-search courses-top-bar__search-icon"></i>
                         </form>
