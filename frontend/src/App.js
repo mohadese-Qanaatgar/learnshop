@@ -10,34 +10,35 @@ export default function App() {
 
   const router = useRoutes(routes);
 
-  const login = useCallback((userInfos,token) => {
+  const login = (userInfos, token) => {
     setToken(token);
-    setIsLoggedIn(true)
-    setUserInfos(userInfos)
+    setIsLoggedIn(true);
+    setUserInfos(userInfos);
     localStorage.setItem("user", JSON.stringify({ token }));
-  },[])
+  };
 
   const logout = useCallback(() => {
-    setToken(null)
-    setUserInfos({})
-    localStorage.removeItem('user')
-  },[])
+    setToken(null);
+    setUserInfos({});
+    localStorage.removeItem("user");
+  }, []);
 
   useEffect(() => {
-    const localStorageData = JSON.parse(localStorage.getItem('user'))
-    if(localStorageData){
-      fetch('http://localhost:4000/v1/auth/me',{
-        headers :{
-          'Authorization' :`Bearer ${localStorageData.token}`
-        }
-      }).then(res => res.json())
-      .then(userData => {
-        setIsLoggedIn(true)
-        setUserInfos(userData)
+    const localStorageData = JSON.parse(localStorage.getItem("user"));
+    if (localStorageData) {
+      fetch("http://localhost:4000/v1/auth/me", {
+        headers: {
+          Authorization: `Bearer ${localStorageData.token}`,
+        },
       })
+        .then((res) => res.json())
+        .then((userData) => {
+          setIsLoggedIn(true);
+          setUserInfos(userData);
+        });
     }
     // console.log(localStorageData);
-  },[token,login])
+  }, [token, login]);
 
   return (
     <AuthContext.Provider

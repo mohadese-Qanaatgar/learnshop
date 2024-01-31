@@ -10,7 +10,7 @@ export default function LastArticles() {
     fetch(`http://localhost:4000/v1/articles`)
       .then((res) => res.json())
       .then((allArticles) => {
-        console.log(allArticles);
+        // console.log(allArticles);
         setArticles(allArticles);
       });
   }, []);
@@ -21,6 +21,7 @@ export default function LastArticles() {
           title="جدیدترین مقاله ها"
           desc="پیش به سوی ارتقای دانش"
           btnTitle="تمامی مقاله ها"
+          btnHref='articles/1'
         />
         <div className="articles__content">
           <div className="row">
