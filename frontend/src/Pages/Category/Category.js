@@ -7,6 +7,7 @@ import CourseBox from "../../Components/CourseBox/CourseBox";
 import Pagination from "../../Components/Pagination/Pagination";
 import { useParams } from "react-router-dom";
 
+
 export default function Category() {
   const [courses, setCourses] = useState([]);
   const [orderedCourses, setOrderedCourses] = useState([]);
