@@ -3,6 +3,8 @@ import Topbar from "./../../Components/Topbar/Topbar";
 import Navbar from "./../../Components/Navbar/Navbar";
 import Footer from "./../../Components/Footer/Footer";
 import Input from "../../Components/Form/Input";
+import swal from 'sweetalert'
+import { useNavigate } from "react-router-dom";
 import {
   requiredValidator,
   minValidator,
@@ -15,6 +17,7 @@ import { useForm } from "../../hooks/useForm";
 import Button from "../../Components/Form/Button";
 
 export default function Contact() {
+  const navigate = useNavigate()
   const [formState, onInputHandler] = useForm(
     {
       name: {
@@ -37,8 +40,33 @@ export default function Contact() {
     false
   );
 
-  const addNewContact = () => {
-    console.log("درخواست شما برای مدیران سایت ارسال شد");
+  const addNewContact = (event) => {
+    event.preventDefault();
+
+    const newContactInfo = {
+        name :formState.inputs.name.value,
+        email : formState.inputs.email.value,
+        phone :formState.inputs.phone.value,
+        body:formState.inputs.body.value
+    }
+    fetch(`http://localhost:4000/v1/contact`, {
+        method:'POST',
+        headers : {
+            'Content-Type' : 'application/json'
+        },
+        body : JSON.stringify(newContactInfo)
+    }).then(res => {
+      // console.log(res);
+      if(res.ok){
+        swal({
+          title:'پیغام شما با موفقیت ارسال شد',
+          icon:'success',
+          button:'تایید'
+        }).then((value) => {
+          navigate('/')
+        })
+      }
+     })
   };
   return (
     <>
@@ -60,7 +88,11 @@ export default function Contact() {
                 className="login-form__username-input"
                 type="text"
                 placeholder="نام و نام خانوادگی"
-                validations={[requiredValidator(), minValidator(6), maxValidator(20)]}
+                validations={[
+                  requiredValidator(),
+                  minValidator(6),
+                  maxValidator(20),
+                ]}
               />
               <i className="login-form__username-icon fa fa-user"></i>
             </div>
@@ -72,7 +104,12 @@ export default function Contact() {
                 className="login-form__password-input"
                 type="text"
                 placeholder="آدرس ایمیل"
-                validations={[requiredValidator(), minValidator(8), maxValidator(40), emailValidator()]}
+                validations={[
+                  requiredValidator(),
+                  minValidator(8),
+                  maxValidator(40),
+                  emailValidator(),
+                ]}
               />
               <i className="login-form__password-icon fa fa-envelope"></i>
             </div>
@@ -84,7 +121,11 @@ export default function Contact() {
                 className="login-form__password-input"
                 type="text"
                 placeholder="شماره تماس"
-                validations={[requiredValidator(), minValidator(10), maxValidator(11)]}
+                validations={[
+                  requiredValidator(),
+                  minValidator(10),
+                  maxValidator(11),
+                ]}
               />
               <i className="login-form__password-icon fa fa-phone"></i>
             </div>
