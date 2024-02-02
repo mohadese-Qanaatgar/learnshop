@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 export default function Topbar() {
   const [adminInfo, setAdminInfo] = useState({});
   const [adminNotifications, setAdminNotifications] = useState([]);
-  const [isShowNotificationsBox, setIsShowNotificationsBox] = useState(false);
+  const [isShowNotificationBox, setIsShowNotificationBox] = useState(false);
 
   useEffect(() => {
     const localStorageData = JSON.parse(localStorage.getItem("user"));
@@ -20,55 +20,78 @@ export default function Topbar() {
         setAdminInfo(data);
         setAdminNotifications(data.notifications);
       });
-  }, []);
+  }, [seeNotification]);
+  console.log(adminNotifications);
+
+  function seeNotification(notificationID) {
+    console.log(notificationID);
+    const localStorageData = JSON.parse(localStorage.getItem("user"));
+
+    fetch(`http://localhost:4000/v1/notifications/see/${notificationID}`, {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${localStorageData.token}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((result) => console.log(result));
+  }
+
   return (
-    <div className="container-fluid">
-      <div className="container">
-        <div className={`home-header ${isShowNotificationsBox ? 'active-modal-notfication' : ''}`}>
-          <div className="home-right">
-            <div className="home-searchbar">
-              <input type="text" className="search-bar" placeholder="جستجو..." />
+    <div class="container-fluid">
+      <div class="container">
+        <div
+          class={`home-header ${
+            isShowNotificationBox ? "active-modal-notfication" : ""
+          }`}
+        >
+          {/* <div class='home-header active-modal-notfication'> */}
+          <div class="home-right">
+            <div class="home-searchbar">
+              <input type="text" class="search-bar" placeholder="جستجو..." />
             </div>
-            <div className="home-notification">
+            <div class="home-notification">
               <button
                 type="button"
-                onMouseEnter={() => setIsShowNotificationsBox(true)}
+                onMouseEnter={() => setIsShowNotificationBox(true)}
               >
-                <i className="far fa-bell"></i>
+                <i class="far fa-bell"></i>
               </button>
             </div>
-            <div className="home-notification-modal"
-            onMouseEnter={() => setIsShowNotificationsBox(true)}
-            onMouseLeave={() => setIsShowNotificationsBox(false)}>
-              <ul className="home-notification-modal-list">
-                {adminNotifications.length === 0 ? (
-                  <div>نوتیفی وجود ندارد</div>
-                ) : (
-                  <>
-                    {adminNotifications.map((notification) => (
-                      <>
-                        <li className="home-notification-modal-item">
-                          <span className="home-notification-modal-text">
-                            {notification}
-                          </span>
-                          <label className="switch">
-                            <a href="javascript:void(0)">دیدم</a>
-                          </label>
-                        </li>
-                      </>
-                    ))}
-                  </>
-                )}
+            <div
+              class="home-notification-modal"
+              onMouseEnter={() => setIsShowNotificationBox(true)}
+              onMouseLeave={() => setIsShowNotificationBox(false)}
+            >
+              <ul class="home-notification-modal-list">
+                {adminNotifications.map((notification) => (
+                  <li
+                    key={notification._id}
+                    class="home-notification-modal-item"
+                  >
+                    <span class="home-notification-modal-text">
+                      {notification.msg}
+                    </span>
+                    <label class="switch">
+                      <a
+                        href="javascript:void(0)"
+                        onClick={() => seeNotification(notification._id)}
+                      >
+                        دیدم
+                      </a>
+                    </label>
+                  </li>
+                ))}
               </ul>
             </div>
           </div>
-          <div className="home-left">
-            <div className="home-profile">
-              <div className="home-profile-name">
+          <div class="home-left">
+            <div class="home-profile">
+              <div class="home-profile-name">
                 <a href="#">{adminInfo.name}</a>
               </div>
-              <div className="home-profile-icon">
-                <i className="fas fa-angle-down"></i>
+              <div class="home-profile-icon">
+                <i class="fas fa-angle-down"></i>
               </div>
             </div>
           </div>
