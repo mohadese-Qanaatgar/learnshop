@@ -4,21 +4,21 @@ import './Sidebar.css'
 
 export default function Sidebar() {
   return (
-    <div id="sidebar" class="col-2">
-      <div class="sidebar-header">
-        <div class="sidebar-logo">
+    <div id="sidebar" className="col-2">
+      <div className="sidebar-header">
+        <div className="sidebar-logo">
           <a href="#">
             <img src="/images/logo/Logo.png" alt="Logo" />
           </a>
         </div>
 
-        <div class="sidebar-menu-btn">
-          <i class="fas fa-bars"></i>
+        <div className="sidebar-menu-btn">
+          <i className="fas fa-bars"></i>
         </div>
       </div>
-      <div class="sidebar-menu">
+      <div className="sidebar-menu">
         <ul>
-          <li class="active-menu">
+          <li className="active-menu">
             <Link to='/p-admin'>
               <span>صفحه اصلی</span>
             </Link>
