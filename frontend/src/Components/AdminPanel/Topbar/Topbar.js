@@ -7,6 +7,7 @@ export default function Topbar() {
     const localStorageData = JSON.parse(localStorage.getItem('user'))
     // console.log(localStorageData);
 
+    
     fetch(`http://localhost:4000/v1/auth/me`,{
       headers :{
         'Authorization' : `Bearer ${localStorageData.token}`
