@@ -15,7 +15,8 @@ export default function Category() {
   const { categoryName } = useParams();
   const [status, setStatus] = useState("default");
   const [statusTitle, setStatusTitle] = useState("مرتب سازی بر اساس پیش فرض");
-  const [searchValue , setSearchValue] = useState('')
+  const [searchValue, setSearchValue] = useState("");
+  const [coursesDisplayType, setCoursesDisplayType] = useState("row");
 
   useEffect(() => {
     fetch(`http://localhost:4000/v1/courses/category/${categoryName}`)
@@ -58,11 +59,13 @@ export default function Category() {
     setStatusTitle(event.target.textContent);
   };
 
-  const searchValueChangeHandler =(event) => {
-    setSearchValue(event.target.value)
-    const filteredCourses = courses.filter(course => course.name.includes(event.target.value))
-    setOrderedCourses(filteredCourses)
-  }
+  const searchValueChangeHandler = (event) => {
+    setSearchValue(event.target.value);
+    const filteredCourses = courses.filter((course) =>
+      course.name.includes(event.target.value)
+    );
+    setOrderedCourses(filteredCourses);
+  };
 
   return (
     <>
@@ -82,10 +85,24 @@ export default function Category() {
                   <>
                     <div className="courses-top-bar">
                       <div className="courses-top-bar__right">
-                        <div className="courses-top-bar__row-btn courses-top-bar__icon--active">
+                        <div
+                          className={`courses-top-bar__row-btn ${
+                            coursesDisplayType === "row"
+                              ? "courses-top-bar__icon--active"
+                              : ""
+                          }`}
+                          onClick={() => setCoursesDisplayType("row")}
+                        >
                           <i className="fas fa-border-all courses-top-bar__icon"></i>
                         </div>
-                        <div className="courses-top-bar__column-btn">
+                        <div
+                          className={`courses-top-bar__row-btn ${
+                            coursesDisplayType === "column"
+                              ? "courses-top-bar__icon--active"
+                              : ""
+                          }`}
+                          onClick={() => setCoursesDisplayType("column")}
+                        >
                           <i className="fas fa-align-left courses-top-bar__icon"></i>
                         </div>
 
@@ -182,9 +199,89 @@ export default function Category() {
                       </div>
                     ) : (
                       <>
-                        {shownCourses.map((course) => (
+                      {coursesDisplayType === 'row' ? (
+
+                       <>
+ {shownCourses.map((course) => (
                           <CourseBox {...course} />
                         ))}
+                       </>
+                      ) : (
+                        <>
+                        {shownCourses.map((course) => (
+                          <div class="col-12">
+                            <div class="course-box">
+                              <div class="course__box-header">
+                                <div class="course__box-right">
+                                  <a
+                                    class="course__box-right-link"
+                                    href="#"
+                                  >
+                                    <img
+                                      src="/images/courses/fareelancer.png"
+                                      class="course__box-right-img"
+                                    />
+                                  </a>
+                                </div>
+                                <div class="course__box-left">
+                                  <div class="course__box-left-top">
+                                    <a
+                                      href="#"
+                                      class="course__box-left-link"
+                                    >
+                                      {course.name}
+                                    </a>
+                                  </div>
+                                  <div class="course__box-left-center">
+                                    <div class="course__box-left-teacher">
+                                      <i class="course__box-left-icon fa fa-chalkboard-teacher"></i>
+                                      <span class="course__box-left-name">
+                                        محمد امین سعیدی راد
+                                      </span>
+                                    </div>
+                                    <div class="course__box-left-stars">
+                                      <span class="course__box-left-star">
+                                        <img src="/images/svgs/star_fill.svg" />
+                                      </span>
+                                      <span class="course__box-left-star">
+                                        <img src="/images/svgs/star_fill.svg" />
+                                      </span>
+                                      <span class="course__box-left-star">
+                                        <img src="/images/svgs/star_fill.svg" />
+                                      </span>
+                                      <span class="course__box-left-star">
+                                        <img src="/images/svgs/star_fill.svg" />
+                                      </span>
+                                      <span class="course__box-left-star">
+                                        <img src="/images/svgs/star_fill.svg" />
+                                      </span>
+                                    </div>
+                                  </div>
+                                  <div class="course__box-left-bottom">
+                                    <div class="course__box-left-des">
+                                      <p>{course.description}</p>
+                                    </div>
+                                  </div>
+                                  <div class="course__box-footer">
+                                    <div class="course__box-footer-right">
+                                      <i class="course__box-footer-icon fa fa-users"></i>
+                                      <span class="course__box-footer-count">
+                                        202
+                                      </span>
+                                    </div>
+                                    <span class="course__box-footer-left">
+                                      {course.price === 0
+                                        ? "رایگان"
+                                        : course.price.toLocaleString()}
+                                    </span>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </>
+                      )}
                       </>
                     )}
                     <Pagination

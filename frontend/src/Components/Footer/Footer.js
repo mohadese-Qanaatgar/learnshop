@@ -1,8 +1,49 @@
-import React from 'react';
-import './Footer.css';
-import FooterItem from '../FooterItem/FooterItem';
+import React from "react";
+import FooterItem from "../FooterItem/FooterItem";
+import { Link } from "react-router-dom";
+import Input from "./../../Components/Form/Input";
+import { emailValidator } from "../../Validators/rules";
+import { useForm } from "../../hooks/useForm";
+import swal from "sweetalert";
+
+import "./Footer.css";
 
 export default function Footer() {
+  const [formState, onInputHandler] = useForm(
+    {
+      email: {
+        value: "",
+        isValid: false,
+      },
+    },
+    false
+  );
+
+  const addNewEmail = (event) => {
+    event.preventDefault();
+    const newEmail = {
+      email: formState.inputs.email.value,
+    };
+
+    fetch("http://localhost:4000/v1/newsletters", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newEmail),
+    }).then((res) => {
+      console.log(res);
+
+      if (res.ok) {
+        swal({
+          title: "ایمیل شما با موفقیت در خبرنامه ثبت شد",
+          icon: "success",
+          buttons: "خیلی هم عالی",
+        })
+      }
+    });
+  };
+
   return (
     <footer className="footer">
       <div className="container">
@@ -24,6 +65,7 @@ export default function Footer() {
                 هستند که هوای کاربر های عزیز رو داشته باشند !
               </p>
             </FooterItem>
+
             <FooterItem title="آخرین مطالب">
               <div className="footer-widgets__links">
                 <a href="#" className="footer-widgets__link">
@@ -47,6 +89,7 @@ export default function Footer() {
                 </a>
               </div>
             </FooterItem>
+
             <FooterItem title="دسترسی سریع">
               <div className="row">
                 <div className="col-6">
@@ -82,14 +125,45 @@ export default function Footer() {
                     آموزش پایتون
                   </a>
                 </div>
+
+                <div className="col-6">
+                  <Link to="/contact" className="footer-widgets__link">
+                    ارتباط با ما
+                  </Link>
+                </div>
+                <div class="col-12">
+                  <span class="footer-widgets__title">اشتراک در خبرنامه</span>
+                  <span class="footer-widgets__text text-center d-block">
+                    جهت اطلاع از آخرین اخبار و تخفیف های سایت مشترک شوید!
+                  </span>
+                  <form action="#" class="footer-widgets__form">
+                    <Input
+                      element="input"
+                      id="email"
+                      type="text"
+                      className="footer-widgets__input"
+                      placeholder="ایمیل خود را وارد کنید."
+                      onInputHandler={onInputHandler}
+                      validations={[emailValidator()]}
+                    />
+                    <button
+                      type="submit"
+                      class="footer-widgets__btn"
+                      onClick={addNewEmail}
+                    >
+                      عضویت
+                    </button>
+                  </form>
+                </div>
               </div>
             </FooterItem>
           </div>
         </div>
       </div>
+
       <div className="footer__copyright">
         <span className="footer__copyright-text">
-          کلیه حقوق برای آکادمی آموزش برنامه نویسی  محفوظ است.
+          کلیه حقوق برای آکادمی آموزش برنامه نویسی سبز لرن محفوظ است.
         </span>
       </div>
     </footer>

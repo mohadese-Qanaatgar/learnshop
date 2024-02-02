@@ -65,5 +65,5 @@ export default function Input(props) {
       />
     );
 
-  return <div>{element}</div>;
+  return <div style={{width:'100%'}}>{element}</div>;
 }
