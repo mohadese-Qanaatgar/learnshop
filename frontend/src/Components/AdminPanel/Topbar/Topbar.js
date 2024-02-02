@@ -16,12 +16,11 @@ export default function Topbar() {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         setAdminInfo(data);
         setAdminNotifications(data.notifications);
       });
   }, [seeNotification]);
-  console.log(adminNotifications);
 
   function seeNotification(notificationID) {
     console.log(notificationID);
@@ -34,7 +33,7 @@ export default function Topbar() {
       },
     })
       .then((res) => res.json())
-      .then((result) => console.log(result));
+      
   }
 
   return (
@@ -64,24 +63,32 @@ export default function Topbar() {
               onMouseLeave={() => setIsShowNotificationBox(false)}
             >
               <ul class="home-notification-modal-list">
-                {adminNotifications.map((notification) => (
-                  <li
-                    key={notification._id}
-                    class="home-notification-modal-item"
-                  >
-                    <span class="home-notification-modal-text">
-                      {notification.msg}
-                    </span>
-                    <label class="switch">
-                      <a
-                        href="javascript:void(0)"
-                        onClick={() => seeNotification(notification._id)}
-                      >
-                        دیدم
-                      </a>
-                    </label>
+                {adminNotifications.length === 0 ? (
+                  <li class="home-notification-modal-item">
+                    نوتیفیکیشنی برای نمایش وجود ندارد
                   </li>
-                ))}
+                ) : (
+                  <>
+                    {adminNotifications.map((notification) => (
+                      <li
+                        key={notification._id}
+                        class="home-notification-modal-item"
+                      >
+                        <span class="home-notification-modal-text">
+                          {notification.msg}
+                        </span>
+                        <label class="switch">
+                          <a
+                            href="javascript:void(0)"
+                            onClick={() => seeNotification(notification._id)}
+                          >
+                            دیدم
+                          </a>
+                        </label>
+                      </li>
+                    ))}
+                  </>
+                )}
               </ul>
             </div>
           </div>
