@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import DataTable from "../DataTable/DataTable";
+import swal from 'sweetalert'
 
 export default function Users() {
   const [users, setUsers] = useState([]);
@@ -14,9 +15,36 @@ export default function Users() {
       .then((res) => res.json())
       .then((allUsers) => {
         setUsers(allUsers);
-        console.log(allUsers);
+        // console.log(allUsers);
       });
-  }, []);
+  }, [users]);
+
+  const removeHandler = (userID) => {
+    const localStorageData = JSON.parse(localStorage.getItem("user"));
+
+    swal({
+      title : 'آیا مطمئن هستید میخواهید حذف کنید؟',
+      icon:'warning',
+      buttons : [ 'نه','آره'] 
+    }).then(result => {
+      if(result) {
+        fetch(`http://localhost:4000/v1/users/${userID}`,{
+          method : 'DELETE',
+          headers : {
+            Authorization : `Bearer ${localStorageData.token}`
+          }
+        }).then(res => {
+          if(res.ok){
+            swal({
+              title:'کاربر با موفقیت حذف شد',
+              icon:'success',
+              buttons :'اوکی'
+            })
+          }
+        })
+      }
+    })
+  }
   return (
     <>
       <DataTable title="کاربران">
@@ -47,7 +75,7 @@ export default function Users() {
                   </button>
                 </td>
                 <td>
-                  <button type="button" class="btn btn-danger delete-btn">
+                  <button type="button" class="btn btn-danger delete-btn" onClick={() => removeHandler(user._id)}>
                     حذف
                   </button>
                 </td>
