@@ -1,24 +1,43 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import './Sidebar.css'
+import AuthContext from '../../../Context/authContext'
+import swal from 'sweetalert'
 
 export default function Sidebar() {
+
+  const authContext = useContext(AuthContext)
+  const navigate =useNavigate()
+
+  const logoutAdmin = (event) => {
+    event.preventDefault()
+    console.log('log out');
+
+    swal({
+      title:'با موفقیت خارج شدید',
+      icon:'success',
+      buttons:'ok'
+    }).then(() => {
+      authContext.logout()
+      navigate('/')
+    })
+  }
   return (
-    <div id="sidebar" class="col-2">
-      <div class="sidebar-header">
-        <div class="sidebar-logo">
+    <div id="sidebar" className="col-2">
+      <div className="sidebar-header">
+        <div className="sidebar-logo">
           <a href="#">
             <img src="/images/logo/Logo.png" alt="Logo" />
           </a>
         </div>
 
-        <div class="sidebar-menu-btn">
-          <i class="fas fa-bars"></i>
+        <div className="sidebar-menu-btn">
+          <i className="fas fa-bars"></i>
         </div>
       </div>
-      <div class="sidebar-menu">
+      <div className="sidebar-menu">
         <ul>
-          <li class="active-menu">
+          <li className="active-menu">
             <Link to='/p-admin'>
               <span>صفحه اصلی</span>
             </Link>
@@ -52,6 +71,11 @@ export default function Sidebar() {
             <Link to='#'>
               <span>دسته‌بندی‌ها</span>
             </Link>
+          </li>
+          <li>
+            <a href='#' onClick={logoutAdmin}>
+              <span>خروج</span>
+            </a>
           </li>
         </ul>
       </div>

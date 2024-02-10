@@ -36,9 +36,11 @@ export default function App() {
           setIsLoggedIn(true);
           setUserInfos(userData);
         });
+    } else {
+      setIsLoggedIn(false)
     }
     // console.log(localStorageData);
-  }, [token, login]);
+  }, [ login , logout]);
 
   return (
     <AuthContext.Provider
