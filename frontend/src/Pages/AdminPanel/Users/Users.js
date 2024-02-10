@@ -4,9 +4,9 @@ import swal from 'sweetalert'
 
 export default function Users() {
   const [users, setUsers] = useState([]);
-  const localStorageData = JSON.parse(localStorage.getItem("user"));
-
+  
   useEffect(() => {
+    const localStorageData = JSON.parse(localStorage.getItem("user"));
     fetch(`http://localhost:4000/v1/users`, {
       headers: {
         Authorization: `Bearer ${localStorageData.token}`,
