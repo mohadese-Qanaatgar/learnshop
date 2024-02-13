@@ -6,6 +6,7 @@ import Input from "../../Components/Form/Input";
 import Navbar from "../../Components/Navbar/Navbar";
 import Topbar from "../../Components/Topbar/Topbar";
 import { useForm } from "../../hooks/useForm";
+import swal from "sweetalert";
 import {
   requiredValidator,
   minValidator,
@@ -64,7 +65,19 @@ export default function Register() {
       },
       body: JSON.stringify(newUserInfos),
     })
-      .then((res) => res.json())
+      .then((res) => {
+        if(res.ok){
+          return res.json()
+        }else {
+          if(res.status === 403 ){
+            swal({
+              title:'این شماره تماس مسدود شده',
+              icon:'error',
+              buttons : 'ای بابا'
+            })
+          }
+        }
+        })
       .then((result) => {
         console.log(result)
         authContext.login(result.user,result.accessToken)
