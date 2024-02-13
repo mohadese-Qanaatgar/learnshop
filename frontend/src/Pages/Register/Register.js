@@ -18,7 +18,7 @@ import "./Register.css";
 
 export default function Register() {
   const authContext = useContext(AuthContext);
-  console.log(authContext);
+  // console.log(authContext);
 
   const [formState, onInputHandler] = useForm(
     {
@@ -27,6 +27,10 @@ export default function Register() {
         isValid: false,
       },
       username: {
+        value: "",
+        isValid: false,
+      },
+      phone: {
         value: "",
         isValid: false,
       },
@@ -41,13 +45,14 @@ export default function Register() {
     },
     false
   );
-  console.log(formState);
+  // console.log(formState);
 
   const registerNewUser = (event) => {
     event.preventDefault();
     const newUserInfos = {
       name: formState.inputs.name.value,
       username: formState.inputs.username.value,
+      phone: formState.inputs.phone.value,
       email: formState.inputs.email.value,
       password: formState.inputs.password.value,
       confirmPassword: formState.inputs.password.value,
@@ -115,6 +120,21 @@ export default function Register() {
                   requiredValidator(),
                   minValidator(8),
                   maxValidator(20),
+                ]}
+              />
+              <i className="login-form__username-icon fa fa-user"></i>
+            </div>
+            <div className="login-form__username">
+              <Input
+                type="text"
+                placeholder="شماره تماس"
+                className="login-form__username-input"
+                element="input"
+                id="phone"
+                onInputHandler={onInputHandler}
+                validations={[
+                  minValidator(10),
+                  maxValidator(12),
                 ]}
               />
               <i className="login-form__username-icon fa fa-user"></i>
