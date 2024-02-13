@@ -13,6 +13,7 @@ import Users from "./Pages/AdminPanel/Users/Users";
 import AdminCourses from "./Pages/AdminPanel/Courses/Courses";
 import Menus from "./Pages/AdminPanel/Menus/Menus";
 import AdminArticles from "./Pages/AdminPanel/Articles/Articles";
+import AdminCategory from './Pages/AdminPanel/Category/Category'
 
 const routes = [
   { path: "/", element: <Index /> },
@@ -45,6 +46,10 @@ const routes = [
         path: "articles",
         element: <AdminArticles />,
       },
+      {
+        path: "category",
+        element: <AdminCategory/>,
+      }
     ],
   },
 ];
