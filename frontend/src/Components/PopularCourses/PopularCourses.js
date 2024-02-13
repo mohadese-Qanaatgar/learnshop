@@ -18,7 +18,7 @@ export default function PopularCourses() {
       setPopularCourses(allPopularCourses)
     })
   } ,[])
-  console.log(popularCourses);
+  // console.log(popularCourses);
   return (
     <div class="popular">
       <div class="container">
