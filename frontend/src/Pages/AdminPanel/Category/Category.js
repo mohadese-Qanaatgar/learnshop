@@ -32,7 +32,6 @@ export default function Category() {
               <th>عنوان</th>
               <th>ویرایش</th>
               <th>حذف</th>
-
             </tr>
           </thead>
           <tbody>
