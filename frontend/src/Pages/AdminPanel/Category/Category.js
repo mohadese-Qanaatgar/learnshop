@@ -35,7 +35,7 @@ export default function Category() {
     fetch(`http://localhost:4000/v1/category`)
       .then((res) => res.json())
       .then((allCategories) => {
-        console.log(allCategories);
+        // console.log(allCategories);
         setCategories(allCategories);
       });
   }
@@ -69,6 +69,34 @@ export default function Category() {
         });
       });
   };
+
+  const removeHandler = (categoryID) => {
+    swal({
+      title:'از حذف دسته بندی اطمینان دارید؟',
+      icon:'warning',
+      buttons : ['نه', 'آره']
+    }).then(result => {
+      if(result) {
+        const localStorageData = JSON.parse(localStorage.getItem('user'))
+
+        fetch(`http://localhost:4000/v1/category/${categoryID}` ,{
+          method : 'DELETE',
+          headers : {
+            Authorization : `Bearer ${localStorageData.token}`
+          }
+        }).then(res => res.json())
+        .then(result => {
+          swal({
+            title :'حذف با موفقیت انجام شد',
+            icon : 'success',
+            buttons : 'اوکی'
+          }).then (() => {
+            getAllCategories()
+          })
+        })
+      }
+    })
+  }
 
   return (
     <>
@@ -141,7 +169,7 @@ export default function Category() {
                   </button>
                 </td>
                 <td>
-                  <button type="button" class="btn btn-danger delete-btn">
+                  <button type="button" class="btn btn-danger delete-btn" onClick={() => removeHandler(category._id)}>
                     حذف
                   </button>
                 </td>
