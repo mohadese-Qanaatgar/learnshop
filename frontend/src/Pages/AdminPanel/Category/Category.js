@@ -35,14 +35,14 @@ export default function Category() {
     fetch(`http://localhost:4000/v1/category`)
       .then((res) => res.json())
       .then((allCategories) => {
-        // console.log(allCategories);
+        console.log(allCategories);
         setCategories(allCategories);
       });
   }
 
   const createNewCategory = (event) => {
     event.preventDefault();
-    const localStorageData = JSON.parse(localStorage.getItem("user"))
+    const localStorageData = JSON.parse(localStorage.getItem("user"));
 
     const newCategoryInfo = {
       title: formState.inputs.title.value,
@@ -53,7 +53,7 @@ export default function Category() {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${localStorageData.token}`,
+        Authorization: `Bearer ${localStorageData.token}`,
       },
       body: JSON.stringify(newCategoryInfo),
     })
@@ -70,33 +70,66 @@ export default function Category() {
       });
   };
 
-  const removeHandler = (categoryID) => {
+  const removeCategory = (categoryID) => {
+    const localStorageData = JSON.parse(localStorage.getItem("user"));
     swal({
-      title:'از حذف دسته بندی اطمینان دارید؟',
-      icon:'warning',
-      buttons : ['نه', 'آره']
-    }).then(result => {
-      if(result) {
-        const localStorageData = JSON.parse(localStorage.getItem('user'))
+      title: "آیا از حذف دسته بندی اطمینان داری؟",
+      icon: "warning",
+      buttons: ["نه", "آره"],
+    }).then((result) => {
+      if (result) {
+        fetch(`http://localhost:4000/v1/category/${categoryID}`, {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${localStorageData.token}`,
+          },
+        })
+          .then((res) => res.json())
+          .then((result) => {
+            swal({
+              title: "دسته بندی مورد نظر با موفقیت حذف شد",
+              icon: "success",
+              buttons: "اوکی",
+            }).then(() => {
+              getAllCategories();
+            });
+          });
+      }
+    });
+  };
 
-        fetch(`http://localhost:4000/v1/category/${categoryID}` ,{
-          method : 'DELETE',
-          headers : {
-            Authorization : `Bearer ${localStorageData.token}`
-          }
-        }).then(res => res.json())
-        .then(result => {
-          swal({
-            title :'حذف با موفقیت انجام شد',
-            icon : 'success',
-            buttons : 'اوکی'
-          }).then (() => {
-            getAllCategories()
+  const updateCategory = (categoryID) => {
+    const localStorageData = JSON.parse(localStorage.getItem("user"));
+    swal({
+      title: "عنوان جدید دسته بندی را وارد نمایید",
+      content: "input",
+      buttons: "ثبت عنوان جدید",
+    }).then((result) => {
+      if (result.trim().length) {
+        fetch(`http://localhost:4000/v1/category/${categoryID}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${localStorageData.token}`,
+          },
+          body: JSON.stringify({
+            title: result
           })
         })
+          .then((res) => res.json())
+          .then((result) => {
+            console.log(result);
+            swal({
+              title: "دسته بندی مورد نظر با موفقیت ویرایش شد",
+              icon: "success",
+              buttons: "اوکی",
+            }).then(() => {
+              getAllCategories();
+            });
+          });
       }
-    })
-  }
+    });
+  };
 
   return (
     <>
@@ -164,12 +197,20 @@ export default function Category() {
                 <td>{index + 1}</td>
                 <td>{category.title}</td>
                 <td>
-                  <button type="button" class="btn btn-primary edit-btn">
+                  <button
+                    type="button"
+                    class="btn btn-primary edit-btn"
+                    onClick={() => updateCategory(category._id)}
+                  >
                     ویرایش
                   </button>
                 </td>
                 <td>
-                  <button type="button" class="btn btn-danger delete-btn" onClick={() => removeHandler(category._id)}>
+                  <button
+                    type="button"
+                    class="btn btn-danger delete-btn"
+                    onClick={() => removeCategory(category._id)}
+                  >
                     حذف
                   </button>
                 </td>
