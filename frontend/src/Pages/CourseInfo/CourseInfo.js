@@ -18,6 +18,7 @@ export default function CourseInfo() {
   const [score, setScore] = useState(5);
   const [courseDetailes, setCourseDetailes] = useState({});
   const [courseTeacher , setCourseTeacher] =useState({})
+  const [courseCategory , setCourseCategory] = useState([])
 
   const { courseName } = useParams();
 
@@ -41,6 +42,7 @@ export default function CourseInfo() {
         setUpdatedAt(courseInfo.updatedAt);
         setCourseDetailes(courseInfo);
         setCourseTeacher(courseInfo.creator)
+        setCourseCategory(courseInfo.categoryID)
         console.log(courseInfo);
       });
   }, []);
@@ -93,7 +95,7 @@ export default function CourseInfo() {
           <div className="row">
             <div className="col-6">
               <a href="#" className="course-info__link">
-                آموزش برنامه نویسی فرانت اند
+                {courseCategory.title}
               </a>
               <h1 className="course-info__title">
                 آموزش 20 کتابخانه جاوااسکریپت برای بازار کار
