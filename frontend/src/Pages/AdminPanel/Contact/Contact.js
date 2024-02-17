@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import DataTable from './../DataTable/DataTable'
+import swal from 'sweetalert'
 
 export default function Contact() {
 
@@ -17,6 +18,13 @@ export default function Contact() {
             setContacts(allContacts)
         })
     } ,[])
+
+    const showContactBody = (body) => {
+        swal({
+            title : body,
+            buttons : 'خواندم'
+        })
+    }
     
   return (
     <>
@@ -41,7 +49,8 @@ export default function Contact() {
                 <td>{contact.email}</td>
                 <td>{contact.phone}</td>
                 <td>
-                  <button type="button" class="btn btn-primary edit-btn">
+                  <button type="button" class="btn btn-primary edit-btn"
+                  onClick={() => showContactBody(contact.body)}>
                     مشاهده پیغام
                   </button>
                 </td>
