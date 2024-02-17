@@ -99,7 +99,35 @@ export default function Courses() {
 
   const addNewCourse = (event) => {
     event.preventDefault()
-    console.log(formState);
+    // console.log(formState);
+
+    const localStorageData = JSON.parse(localStorage.getItem('user'))
+
+    let formData = new FormData()
+    formData.append('name' , formState.inputs.name.value)
+    formData.append('description' , formState.inputs.description.value)
+    formData.append('shortName' , formState.inputs.shortName.value)
+    formData.append('categoryID' , courseCategory)
+    formData.append('price' , formState.inputs.price.value)
+    formData.append('support' , formState.inputs.support.value)
+    formData.append('status' , courseStatus)
+    formData.append('cover' , courseCover)
+
+    fetch(`http://localhost:4000/v1/courses` , {
+      method : 'POST',
+      headers : {
+        Authorization : `Beare ${localStorageData.token}`
+      },
+      body : formData
+    }).then(res => {
+      console.log(res);
+      swal({
+        title : 'دوره جدید با موفقیت اضافه شد',
+        icon : 'success',
+        buttons : 'تایید'
+      }).then(() => getAllCourses())
+    })
+
   }
 
   return (
