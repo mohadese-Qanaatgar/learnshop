@@ -12,10 +12,10 @@ import "./Courses.css";
 
 export default function Courses() {
   const [courses, setCourses] = useState([]);
-  const [courseCategory, setCourseCategory] = useState("");
+  const [courseCategory, setCourseCategory] = useState("-1");
   const [categories, setCategories] = useState([]);
-  const [courseStatus , setCourseStatus] = useState('start')
-  const [courseCover ,setCourseCover] = useState({})
+  const [courseStatus, setCourseStatus] = useState("start");
+  const [courseCover, setCourseCover] = useState({});
 
   const [formState, onInputHandler] = useForm(
     {
@@ -98,37 +98,43 @@ export default function Courses() {
   };
 
   const addNewCourse = (event) => {
-    event.preventDefault()
+    event.preventDefault();
     // console.log(formState);
 
-    const localStorageData = JSON.parse(localStorage.getItem('user'))
+    const localStorageData = JSON.parse(localStorage.getItem("user"));
 
-    let formData = new FormData()
-    formData.append('name' , formState.inputs.name.value)
-    formData.append('description' , formState.inputs.description.value)
-    formData.append('shortName' , formState.inputs.shortName.value)
-    formData.append('categoryID' , courseCategory)
-    formData.append('price' , formState.inputs.price.value)
-    formData.append('support' , formState.inputs.support.value)
-    formData.append('status' , courseStatus)
-    formData.append('cover' , courseCover)
+    let formData = new FormData();
+    formData.append("name", formState.inputs.name.value);
+    formData.append("description", formState.inputs.description.value);
+    formData.append("shortName", formState.inputs.shortName.value);
+    formData.append("categoryID", courseCategory);
+    formData.append("price", formState.inputs.price.value);
+    formData.append("support", formState.inputs.support.value);
+    formData.append("status", courseStatus);
+    formData.append("cover", courseCover);
 
-    fetch(`http://localhost:4000/v1/courses` , {
-      method : 'POST',
-      headers : {
-        Authorization : `Beare ${localStorageData.token}`
-      },
-      body : formData
-    }).then(res => {
-      console.log(res);
+    if (courseCategory === '-1') {
       swal({
-        title : 'دوره جدید با موفقیت اضافه شد',
-        icon : 'success',
-        buttons : 'تایید'
-      }).then(() => getAllCourses())
-    })
-
-  }
+        title: "لطفا دسته بندی دوره را اانتخاب کنید",
+        icon: "error",
+      });
+    } else {
+      fetch(`http://localhost:4000/v1/courses`, {
+        method: "POST",
+        headers: {
+          Authorization: `Beare ${localStorageData.token}`,
+        },
+        body: formData,
+      }).then((res) => {
+        console.log(res);
+        swal({
+          title: "دوره جدید با موفقیت اضافه شد",
+          icon: "success",
+          buttons: "تایید",
+        }).then(() => getAllCourses());
+      });
+    }
+  };
 
   return (
     <>
@@ -212,6 +218,7 @@ export default function Courses() {
               <div class="number input">
                 <label class="input-title">دسته‌بندی دوره</label>
                 <select onChange={selectCategory}>
+                  <option value="-1">لطفا دسته بندی را انتخاب کنید</option>
                   {categories.map((category) => (
                     <option value={category._id}>{category.title}</option>
                   ))}
@@ -222,10 +229,14 @@ export default function Courses() {
             <div class="col-6">
               <div class="file">
                 <label class="input-title">عکس دوره</label>
-                <input type="file" id="file" onChange={event => {
-                  console.log(event.target.files[0]);
-                  setCourseCover(event.target.files[0])
-                }}/>
+                <input
+                  type="file"
+                  id="file"
+                  onChange={(event) => {
+                    console.log(event.target.files[0]);
+                    setCourseCover(event.target.files[0]);
+                  }}
+                />
               </div>
             </div>
             <div class="col-12">
@@ -241,15 +252,23 @@ export default function Courses() {
                           value="start"
                           name="condition"
                           checked
-                          onInput={event => setCourseStatus(event.target.value)}
+                          onInput={(event) =>
+                            setCourseStatus(event.target.value)
+                          }
                         />
                       </label>
                     </div>
                     <div class="unavailable">
                       <label>
                         <span>پیش فروش</span>
-                        <input type="radio" value="presell" name="condition"
-                        onInput={event => setCourseStatus(event.target.value)} />
+                        <input
+                          type="radio"
+                          value="presell"
+                          name="condition"
+                          onInput={(event) =>
+                            setCourseStatus(event.target.value)
+                          }
+                        />
                       </label>
                     </div>
                   </div>
