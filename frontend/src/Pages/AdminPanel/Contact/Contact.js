@@ -25,7 +25,35 @@ export default function Contact() {
             buttons : 'خواندم'
         })
     }
-    
+
+    const sendAnswerToContatc = (contactEmail) => {
+      swal({
+        title : 'لطفا پاسخ را وارد کنید',
+        content : 'input',
+        buttons : 'ارسال پاسخ'
+      }).then(value => {
+
+        const localStorageData = JSON.parse(localStorage.getItem('user'))
+
+        const answerInfo = {
+          email : contactEmail,
+          answer : value
+        }
+        fetch(`http://localhost:4000/v1/contact/answer`,{
+          method : 'POST',
+          headers : {
+            'Content-Type' : 'Application/json',
+            Authorization : `Bearer ${localStorageData.token}`
+          },
+          body : JSON.stringify(answerInfo)
+        }).then(res => {
+          console.log(res);
+          if(res.ok) {
+           return res.json()
+          }
+        }).then(result => console.log(result))
+      })
+    }
   return (
     <>
     <DataTable title="پیغام ها">
@@ -64,7 +92,9 @@ export default function Contact() {
                   </button>
                 </td>
                 <td>
-                  <button type="button" class="btn btn-primary edit-btn">
+                  <button type="button" class="btn btn-primary edit-btn"
+                  onClick={() => sendAnswerToContatc(contact.email)}
+                  >
                     پاسخ
                   </button>
                 </td>
