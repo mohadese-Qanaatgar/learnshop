@@ -1,10 +1,15 @@
 import React, { useEffect, useState } from "react";
 import DataTable from "../DataTable/DataTable";
+import swal from "sweetalert";
 
 export default function Articles() {
   const [articles, setArticles] = useState([]);
 
   useEffect(() => {
+   getAllArticles()
+  }, []);
+
+  function getAllArticles () {
     const localStorageData = JSON.parse(localStorage.getItem("user"));
 
     fetch(`http://localhost:4000/v1/articles`)
@@ -12,7 +17,36 @@ export default function Articles() {
       .then((allArticles) => {
         setArticles(allArticles);
       });
-  }, []);
+  }
+
+  const removeArticle = (articleID) => {
+    swal({
+      title : 'آیا از حذف مطمئن هستید',
+      icon : 'warning',
+      buttons: ["نه", "آره"],
+    }).then(result => {
+      if(result) {
+        const localStorageData = JSON.parse(localStorage.getItem("user"));
+
+        fetch(`http://localhost:4000/v1/articles/${articleID}`,{
+          method : 'DELETE',
+          headers : {
+            Authorization : `Bearer ${localStorageData.token}`
+          }
+        }).then(res => {
+          if(res.ok) {
+            swal({
+              title : 'مقاله با موفقیت حذف شد',
+              icon : 'success',
+              buttons : 'تایید'
+            }).then(() => {
+              getAllArticles()
+            })
+          }
+        })
+      }
+    })
+  }
   return (
     <>
       <DataTable title="مقاله ها">
@@ -43,7 +77,7 @@ export default function Articles() {
                   <button
                     type="button"
                     class="btn btn-danger delete-btn"
-                    // onClick={() => removeCourse(course._id)}
+                    onClick={() => removeArticle(article._id)}
                   >
                     حذف
                   </button>
