@@ -4,13 +4,15 @@ import swal from "sweetalert";
 import { useForm } from "../../../hooks/useForm";
 import Input from "../../../Components/Form/Input";
 import { minValidator } from "../../../Validators/rules";
-
+import Editor from "../../../Components/Form/Editor";
 
 export default function Articles() {
   const [articles, setArticles] = useState([]);
   const [categories, setCategories] = useState([]);
   const [articleCategory, setArticleCategory] = useState("-1");
   const [articleCover, setArticleCover] = useState({});
+  const [articleBody, setArticleBody] = useState("");
+
 
   const [formState, onInputHandler] = useForm(
     {
@@ -133,6 +135,18 @@ export default function Articles() {
                 <span class="error-message text-danger"></span>
               </div>
             </div>
+            <div class="col-12">
+              <div class="name input">
+                <label class="input-title" style={{ display: "block" }}>
+                  محتوا
+                </label>
+                <Editor
+                value={articleBody}
+                setValue={setArticleBody}
+                />
+                <span class="error-message text-danger"></span>
+              </div>
+            </div>
             <div class="col-6">
               <div class="name input">
                 <label class="input-title" style={{ display: "block" }}>
@@ -215,4 +229,3 @@ export default function Articles() {
     </>
   );
 }
-
