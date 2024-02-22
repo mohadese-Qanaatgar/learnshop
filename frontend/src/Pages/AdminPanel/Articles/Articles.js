@@ -6,13 +6,13 @@ import Input from "../../../Components/Form/Input";
 import { minValidator } from "../../../Validators/rules";
 import Editor from "../../../Components/Form/Editor";
 
+
 export default function Articles() {
   const [articles, setArticles] = useState([]);
   const [categories, setCategories] = useState([]);
   const [articleCategory, setArticleCategory] = useState("-1");
   const [articleCover, setArticleCover] = useState({});
   const [articleBody, setArticleBody] = useState("");
-
 
   const [formState, onInputHandler] = useForm(
     {
@@ -79,6 +79,36 @@ export default function Articles() {
     });
   };
 
+  const createArticle = event => {
+    event.preventDefault()
+    const localStorageDate = JSON.parse(localStorage.getItem('user'))
+    let formData = new FormData()
+    formData.append('title', formState.inputs.title.value)
+    formData.append('shortName', formState.inputs.shortName.value)
+    formData.append('description', formState.inputs.description.value)
+    formData.append('categoryID', articleCategory)
+    formData.append('cover', articleCover)
+    formData.append('body', articleBody)
+
+    fetch(`http://localhost:4000/v1/articles`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${localStorageDate.token}`
+      },
+      body: formData,
+    }).then(res => {
+      if(res.ok) {
+        swal({
+          title: 'مقاله جدید با موفقیت ایجاد شد',
+          icon: 'success',
+          buttons: 'اوکی'
+        }).then(() => {
+          getAllArticles()
+        })
+      }
+    })
+  }
+
   return (
     <>
       <div class="container-fluid" id="home-content">
@@ -140,9 +170,9 @@ export default function Articles() {
                 <label class="input-title" style={{ display: "block" }}>
                   محتوا
                 </label>
-                <Editor
-                value={articleBody}
-                setValue={setArticleBody}
+                <Editor 
+                  value={articleBody}
+                  setValue={setArticleBody}
                 />
                 <span class="error-message text-danger"></span>
               </div>
@@ -180,7 +210,7 @@ export default function Articles() {
             <div class="col-12">
               <div class="bottom-form">
                 <div class="submit-btn">
-                  <input type="submit" value="افزودن" />
+                  <input type="submit" value="افزودن" onClick={createArticle} />
                 </div>
               </div>
             </div>
@@ -229,3 +259,4 @@ export default function Articles() {
     </>
   );
 }
+
