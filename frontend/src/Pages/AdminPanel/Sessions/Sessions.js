@@ -97,8 +97,6 @@ const removeSession = (sessionID) => {
             })
         }
     })
-
-    
 }
   return (
     <>
