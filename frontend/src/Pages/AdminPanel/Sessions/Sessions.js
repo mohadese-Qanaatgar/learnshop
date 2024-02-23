@@ -6,6 +6,7 @@ import { minValidator } from "../../../Validators/rules";
 export default function Sessions() {
   const [courses, setCourses] = useState([]);
   const [sessionCourse, setSessionCourse] = useState('-1');
+  const [sessionVideo, setSessionVideo] = useState({})
   const [formState, onInputHandler] = useForm(
     {
       title: {
@@ -79,7 +80,13 @@ export default function Sessions() {
                 <span class="error-message text-danger"></span>
               </div>
             </div>
-
+            <div class="col-6">
+              <div class="name input">
+                <label class="input-title">عنوان جلسه</label>
+                <input type="file" onChange={event => setSessionVideo(event.target.files[0])} />
+                <span class="error-message text-danger"></span>
+              </div>
+            </div>
             <div class="col-12">
               <div class="bottom-form">
                 <div class="submit-btn">
