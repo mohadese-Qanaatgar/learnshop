@@ -64,6 +64,31 @@ export default function Menus() {
 
   const createMenu = (event) => {
     event.preventDefault();
+    const newMenuInfo = {
+      title : formState.inputs.title.value,
+      href : formState.inputs.href.value,
+      parent : menuParent === -1 ? undefined : menuParent
+    }
+    const localStorageData = JSON.parse(localStorage.getItem('user'))
+    fetch(`http://localhost:4000/v1/menus`,{
+      method : 'POST',
+      headers : {
+        Authorization : `Bearer ${localStorageData.token}`,
+        'Content-Type' : 'application/json'
+      },
+      body : JSON.stringify(newMenuInfo)
+    }).then(res => {
+      if(res.ok) {
+        swal({
+          title : 'منو با موفقیت اضافه شد',
+          icon : 'success',
+          buttons : 'تایید'
+        }).then((result) => {
+          getAllMenus()
+        })
+      }
+     
+    })
   };
 
   return (
