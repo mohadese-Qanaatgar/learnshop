@@ -8,6 +8,7 @@ import './Styles/fonts.css'
 import './Styles/variables.css'
 import './Styles/helpers.css'
 import './Styles/defaults.css'
+
  
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
