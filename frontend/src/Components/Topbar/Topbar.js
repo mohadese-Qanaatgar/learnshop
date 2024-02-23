@@ -2,7 +2,7 @@ import React, { useEffect, useState ,memo } from 'react'
 import { Link } from 'react-router-dom'
 import './Topbar.css'
 
-export default memo(function Topbar() {
+export default memo(function Topbar({indexInfo}) {
 
   const [allTopbarLinks , setAllTopbarLinks] =useState([])
 
