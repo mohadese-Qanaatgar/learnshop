@@ -145,9 +145,9 @@ export default function ArticleInfo() {
                 />
                 <div
                   class="article-section"
-                  dangerouslySetInnerHTML={{
-                    __html: domPurify.sanitize(articleDetailes.body)
-                  }}
+                  // dangerouslySetInnerHTML={{
+                  //   __html: domPurify.sanitize(articleDetailes.body)
+                  // }}
                 >
                   {/* <h2 class="article-section__title">
                     معرفی بهترین سایت ‌های آموزش جاوا اسکریپت:
