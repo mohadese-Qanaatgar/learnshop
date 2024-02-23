@@ -280,7 +280,7 @@ export default function CourseInfo() {
                                 </span>
                                 <i className="fab fa-youtube introduction__accordion-icon"></i>
                                 <Link
-                                 to='/'
+                                 to={`/${courseName}/${session._id}`}
                                   className="introduction__accordion-link"
                                 >
                                   {session.title}
