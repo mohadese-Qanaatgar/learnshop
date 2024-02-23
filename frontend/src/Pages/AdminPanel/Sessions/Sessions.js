@@ -70,6 +70,36 @@ export default function Sessions() {
     })
 }
 
+const removeSession = (sessionID) => {
+    const localStorageData = JSON.parse(localStorage.getItem('user'))
+
+    swal({
+        title : 'آیا از حذف مطمئن هستید؟',
+        icon : 'warning',
+        buttons : ["نه" , "آره"]
+    }).then(result =>  {
+        if(result) {
+            fetch(`http://localhost:4000/v1/courses/sessions/${sessionID}`,{
+                method : 'DELETE',
+                headers : {
+                    Authorization : `Bearer ${localStorageData.token}`
+                }
+            }).then(res => {
+                if(res.ok) {
+                    swal({
+                        title : 'جلسه با موفقیت حذف شد',
+                        icon : 'success',
+                        buttons : 'تایید'
+                    }).then((result) => {
+                        getAllSessions()
+                    })
+                }
+            })
+        }
+    })
+
+    
+}
   return (
     <>
       <div class="container-fluid" id="home-content">
@@ -159,7 +189,7 @@ export default function Sessions() {
                   <button
                     type="button"
                     class="btn btn-danger delete-btn"
-                    // onClick={() => removeCourse(course._id)}
+                    onClick={() => removeSession(session._id)}
                   >
                     حذف
                   </button>
