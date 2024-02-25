@@ -755,3 +755,11 @@ ul {
   color: white;
   background-color: var(--primary-color) !important;
 }
+.no-answer-comment {
+  color: white;
+  background-color: red !important;
+}
+.answer-comment {
+  color: white;
+  background-color: var(--primary-color) !important;
+}

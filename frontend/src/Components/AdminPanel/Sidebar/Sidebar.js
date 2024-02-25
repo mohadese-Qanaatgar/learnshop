@@ -68,6 +68,11 @@ export default function Sidebar() {
             </Link>
           </li>
           <li>
+            <Link to='comments'>
+              <span>کامنت ها</span>
+            </Link>
+          </li>
+          <li>
             <Link to='#'>
               <span>کدهای تخفیف</span>
             </Link>
