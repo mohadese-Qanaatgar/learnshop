@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import DataTable from "../DataTable/DataTable";
+import swal from 'sweetalert'
 
 export default function Comments() {
   const [comments, setComments] = useState([]);
@@ -17,6 +18,35 @@ export default function Comments() {
         setComments(allComments);
         console.log(allComments);
       });
+  }
+
+  const removeComment = (commentID) => {
+    const localStorageData = JSON.parse(localStorage.getItem("user"));
+
+    swal({
+        title : 'آیا از حذف مطمئن هستید؟',
+        icon : 'warning',
+        buttons : ['نه','آره']
+    }).then(result => {
+        if(result) {
+            fetch(`http://localhost:4000/v1/comments/${commentID}`, {
+                method : 'DELETE',
+                headers : {
+                    Authorization : `Bearer ${localStorageData.token}`
+                }
+            }).then(res => {
+                if(res.ok){
+                    swal({
+                        title : 'کامنت مورد نظر با موفقیت حذف شد',
+                        icon : 'success',
+                        buttons : 'تایید'
+                    }).then(result => {
+                        getAllComments()
+                    })
+                }
+            })
+        }
+    })
   }
   return (
     <>
@@ -38,7 +68,7 @@ export default function Comments() {
             {comments.map((comment, index) => (
               <tr>
                 <td>{index + 1}</td>
-                <td>{comment.creator.name}</td>
+                {/* <td>{comment.creator.name}</td> */}
                 <td>{comment.course}</td>
                 <td></td>
                 <td>
@@ -60,7 +90,7 @@ export default function Comments() {
                   <button
                     type="button"
                     class="btn btn-danger delete-btn"
-                    // onClick={() => removeComment(comment._id)}
+                    onClick={() => removeComment(comment._id)}
                   >
                     حذف
                   </button>
