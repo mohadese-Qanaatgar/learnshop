@@ -54,6 +54,34 @@ export default function Comments() {
         buttons : 'تایید'
     })
   }
+
+  const banUser = (userID) => {
+    const localStorageData = JSON.parse(localStorage.getItem("user"));
+    swal({
+      title: "آیا از بن مطمعنی؟",
+      icon: "warning",
+      buttons: ["نه", "آره"],
+    }).then((result) => {
+      if (result) {
+        fetch(`http://localhost:4000/v1/users/ban/${userID}`, {
+          method: "PUT",
+          headers: {
+            Authorization: `Bearer ${localStorageData.token}`,
+          },
+        }).then((res) => {
+          if (res.ok) {
+            swal({
+              title: "کاربر با موفقیت بن شد",
+              icon: "success",
+              buttons: "اوکی",
+            }).then(() => {
+                getAllComments()
+            })
+          }
+        });
+      }
+    });
+  }
   return (
     <>
       <DataTable title="کامنت ها">
@@ -85,7 +113,8 @@ export default function Comments() {
                   </button>
                 </td>
                 <td>
-                  <button type="button" class="btn btn-primary edit-btn">
+                  <button type="button" class="btn btn-primary edit-btn"
+                  >
                     پاسخ
                   </button>
                 </td>
@@ -107,6 +136,7 @@ export default function Comments() {
                   <button
                     type="button"
                     class="btn btn-danger delete-btn"
+                    onClick={() => banUser(comment.creator._id)}
                   >
                    بن
                   </button>
