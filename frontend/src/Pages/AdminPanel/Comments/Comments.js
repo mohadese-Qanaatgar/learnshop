@@ -82,6 +82,37 @@ export default function Comments() {
       }
     });
   }
+  const answerToComment = (commentID) => {
+    swal({
+        title : 'پاسخ موردنظر را وارد کنید',
+        content : 'input',
+        buttons : 'ثبت پاسخ'
+    }).then(answerText => {
+        if(answerText){
+            const commentAnswer = {
+                body : answerText
+            }
+            fetch(`http://localhost:4000/v1/comments/answer/${commentID}`,{
+                method : 'POST',
+                headers : {
+                    'Content-Type' : 'application/json',
+                    Authorization : `Bearer ${JSON.parse(localStorage.getItem('user'))}`
+                },
+                body : JSON.stringify(commentAnswer)
+            }).then(res => {
+                if(res.ok){
+                    swal({
+                        title : 'پاسخ مورد نظر با موفقیت ثبت شد',
+                        icon : 'success',
+                        buttons : 'تایید'
+                    }).then(() => {
+                        getAllComments()
+                    })
+                }
+            })
+        }
+    })
+  }
   return (
     <>
       <DataTable title="کامنت ها">
@@ -116,6 +147,7 @@ export default function Comments() {
                 </td>
                 <td>
                   <button type="button" class="btn btn-primary edit-btn"
+                  onClick={() => answerToComment(comment._id)}
                   >
                     پاسخ
                   </button>
