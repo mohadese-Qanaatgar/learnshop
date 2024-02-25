@@ -48,6 +48,12 @@ export default function Comments() {
         }
     })
   }
+  const showCommentBody = (commentBody) => {
+    swal({
+        title : commentBody,
+        buttons : 'تایید'
+    })
+  }
   return (
     <>
       <DataTable title="کامنت ها">
@@ -72,7 +78,9 @@ export default function Comments() {
                 <td>{comment.course}</td>
                 <td></td>
                 <td>
-                  <button type="button" class="btn btn-primary edit-btn">
+                  <button type="button" class="btn btn-primary edit-btn"
+                  onClick={() => {showCommentBody(comment.body)}}
+                  >
                     مشاهده
                   </button>
                 </td>
