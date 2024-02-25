@@ -9,6 +9,7 @@ import CommentsTextArea from "../../Components/CommentsTextArea/CommentsTextArea
 import Accordion from "react-bootstrap/Accordion";
 import { useParams } from "react-router-dom";
 import swal from 'sweetalert'
+import { Link } from "react-router-dom";
 
 export default function CourseInfo() {
   const [comments, setComments] = useState([]);
@@ -269,25 +270,56 @@ export default function CourseInfo() {
                         <Accordion.Header> جلسات دوره</Accordion.Header>
                         {sessions.map((session, index) => (
                           <Accordion.Body>
-                            <div className="accordion-body introduction__accordion-body">
+                            {
+                              (session.free === 1 || courseDetailes.isUserRegisteredToThisCourse) ?
+                              (
+                                <>
+                                 <div className="accordion-body introduction__accordion-body">
                               <div className="introduction__accordion-right">
                                 <span className="introduction__accordion-count">
                                   {index + 1}
                                 </span>
                                 <i className="fab fa-youtube introduction__accordion-icon"></i>
-                                <a
-                                  href="#"
+                                <Link
+                                 to={`/${courseName}/${session._id}`}
                                   className="introduction__accordion-link"
                                 >
                                   {session.title}
-                                </a>
+                                </Link>
                               </div>
                               <div className="introduction__accordion-left">
                                 <span className="introduction__accordion-time">
-                                  18:34
+                                  {session.time}
                                 </span>
                               </div>
                             </div>
+                                </>
+                              ) :
+                              (
+                                <>
+                                 <div className="accordion-body introduction__accordion-body">
+                              <div className="introduction__accordion-right">
+                                <span className="introduction__accordion-count">
+                                  {index + 1}
+                                </span>
+                                <i className="fab fa-youtube introduction__accordion-icon"></i>
+                                <span
+                                  className="introduction__accordion-link"
+                                >
+                                  {session.title}
+                                </span>
+                              </div>
+                              <div className="introduction__accordion-left">
+                                <span className="introduction__accordion-time">
+                                 {session.time}
+                                </span>
+                                <i className="fa fa-lock"></i>
+                              </div>
+                            </div>
+                                </>
+                              )
+                            }
+                           
                           </Accordion.Body>
                         ))}
                       </Accordion.Item>
