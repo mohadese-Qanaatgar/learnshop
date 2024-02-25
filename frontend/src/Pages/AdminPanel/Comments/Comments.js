@@ -101,7 +101,9 @@ export default function Comments() {
           <tbody>
             {comments.map((comment, index) => (
               <tr>
-                <td>{index + 1}</td>
+                <td
+                className={comment.answer === 1 ? 'answer-comment' : 'no-answer-comment'}
+                >{index + 1}</td>
                 {/* <td>{comment.creator.name}</td> */}
                 <td>{comment.course}</td>
                 <td></td>
