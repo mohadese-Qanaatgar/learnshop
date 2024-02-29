@@ -81,7 +81,6 @@ export default function Offs() {
       }
     });
   };
-  
   return (
     <>
       <div class="container-fluid" id="home-content">
