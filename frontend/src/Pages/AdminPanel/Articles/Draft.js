@@ -13,8 +13,9 @@ export default function Draft() {
 
         const localStorageDate = JSON.parse(localStorage.getItem('user'))
 
-        // fetch(`http://lpcalhost:4000/v1/articles/${value}`,{
+        // fetch(`http://localhost:4000/v1/articles/${value}`,{
         //     headers : {
+        //         'Content-Type' : 'application/json',
         //         Authorization : `Bearer ${localStorageDate.token}`
         //     }
         // })
