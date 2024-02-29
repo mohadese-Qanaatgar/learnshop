@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import Input from '../../../Components/Form/Input'
 import { useForm } from '../../../hooks/useForm'
-import { minValidator  } from '../../../Validators/rules'
+import { minValidator, requiredValidator  } from '../../../Validators/rules'
+import swal from 'sweetalert'
 
 export default function Offs() {
     const [courses , setCourses] = useState([])
@@ -35,6 +36,37 @@ export default function Offs() {
             setCourses(allCourses)
         })
     }
+    const createOff = (event) => {
+        event.preventDefault()
+        const localStorageData = JSON.parse(localStorage.getItem('user'))
+
+        const newOffInfos = {
+            code : formState.inputs.code.value,
+            percent : formState.inputs.percent.value,
+            course : offCourse,
+            max : formState.inputs.max.value
+        }
+
+        fetch(`http://localhost:4000/v1/offs` , {
+            method : 'POST',
+            headers : {
+                'Content-Type' : 'application/json',
+                Authorization : `Bearer ${localStorageData.token}`
+            },
+            body : JSON.stringify(newOffInfos)
+        }).then(res => {
+            console.log(res);
+            if(res.ok){
+                swal({
+                    title : 'کد تخفیف با موفقیت ایجاد شد',
+                    icon : 'success',
+                    buttons : 'تایید'
+                }).then(() => {
+                    // getAllOffs()
+                })
+            }
+        })
+    }
   return (
     <>
     <div class="container-fluid" id="home-content">
@@ -65,7 +97,7 @@ export default function Offs() {
                   onInputHandler={onInputHandler}
                   type="text"
                   id="percent"
-                  validations={[minValidator(5)]}
+                  validations={[requiredValidator()]}
                   placeholder="لطفا درصد تخفیف را وارد کنید..."
                 />
                 <span class="error-message text-danger"></span>
@@ -79,7 +111,7 @@ export default function Offs() {
                   onInputHandler={onInputHandler}
                   type="text"
                   id="max"
-                  validations={[minValidator(5)]}
+                  validations={[requiredValidator()]}
                   placeholder="حداکثر ستفاده از کد تخفیف"
                 />
                 <span class="error-message text-danger"></span>
@@ -103,7 +135,7 @@ export default function Offs() {
             <div class="col-12">
               <div class="bottom-form">
                 <div class="submit-btn">
-                  <input type="submit" value="افزودن"/>
+                  <input type="submit" value="افزودن" onClick={createOff}/>
                 </div>
               </div>
             </div>
