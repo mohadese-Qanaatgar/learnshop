@@ -119,7 +119,7 @@ export default function Comments() {
     const localStorageData = JSON.parse(localStorage.getItem('user'))
 
     swal({
-      title : 'آیا از تایید مطمئن هستید',
+      title : 'آیا از تایید کامنت مطمئن هستید',
       icon : 'warning',
       buttons : ["نه" , "آره"]
     }).then(result => {
@@ -143,7 +143,34 @@ export default function Comments() {
       }
     })
   }
+const rejectComment = (commentID) => {
+  const localStorageData = JSON.parse(localStorage.getItem('user'))
 
+    swal({
+      title : 'آیا از رد کامنت مطمئن هستید',
+      icon : 'warning',
+      buttons : ["نه" , "آره"]
+    }).then(result => {
+      if(result) {
+        fetch(`http://localhost:4000/v1/comments/reject/${commentID}`,{
+          method : 'PUT',
+          headers : {
+            Authorization : `Bearer ${localStorageData.token}`
+          }
+        }).then(res => {
+          if(res.ok){
+            swal({
+              title : 'کامنت مورد نظر با موفقیت رد شد',
+              icon : 'success',
+              buttons : "تایید"
+            }).then(() => {
+              getAllComments()
+            })
+          }
+        })
+      }
+    })
+}
   return (
     <>
       <DataTable title="کامنت ها">
@@ -183,13 +210,26 @@ export default function Comments() {
                     پاسخ
                   </button>
                 </td>
-                <td>
-                  <button type="button" class="btn btn-primary edit-btn"
-                  onClick={() => acceptComment(comment._id)}
+                {
+                  comment.answer === 1 ? (
+                    <td>
+                  <button type="button"  class="btn btn-danger delete-btn"
+                  onClick={() => rejectComment(comment._id)}
                   >
-                   تایید
+                  رجکت
                   </button>
                 </td>
+                  ) : (
+                    <td>
+                    <button type="button" class="btn btn-primary edit-btn"
+                    onClick={() => acceptComment(comment._id)}
+                    >
+                     تایید
+                    </button>
+                  </td>
+                  )
+                }
+                
                 <td>
                   <button type="button" class="btn btn-primary edit-btn">
                     ویرایش
