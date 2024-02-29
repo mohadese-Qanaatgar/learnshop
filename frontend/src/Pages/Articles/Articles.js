@@ -38,7 +38,7 @@ export default function Articles() {
           <div className="courses-content">
             <div className="container">
               <div className="row">
-                {shownArticles.map((article) => (
+                {shownArticles.filter(article => article.publish === 1).map((article) => (
                   <ArticleBox {...article} cover="/images/blog/3.jpg" />
                 ))}
                 <Pagination

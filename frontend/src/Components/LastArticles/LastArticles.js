@@ -25,7 +25,7 @@ export default function LastArticles() {
         />
         <div className="articles__content">
           <div className="row">
-            {articles.slice(0,3).map((article) => (
+            {articles.filter(article => article.publish === 1).slice(0,3).map((article) => (
               <ArticleBox
                 title={article.title}
                 description={article.description}

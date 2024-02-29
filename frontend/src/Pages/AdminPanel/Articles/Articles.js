@@ -108,6 +108,35 @@ export default function Articles() {
       }
     })
   }
+  const saveArticleAsDraft = (event) => {
+    event.preventDefault()
+    const localStorageDate = JSON.parse(localStorage.getItem('user'))
+    let formData = new FormData()
+    formData.append('title', formState.inputs.title.value)
+    formData.append('shortName', formState.inputs.shortName.value)
+    formData.append('description', formState.inputs.description.value)
+    formData.append('categoryID', articleCategory)
+    formData.append('cover', articleCover)
+    formData.append('body', articleBody)
+
+    fetch(`http://localhost:4000/v1/articles/draft`,{
+      method : 'POST',
+      headers : {
+        Authorization : `Bearer ${localStorageDate.token}`
+      },
+      body : formData
+    }).then(res => {
+      if(res.ok) {
+        swal({
+          title : 'مقاله شما با موفقیت پیش نویس شد',
+          icon : 'success',
+          buttons : 'تایید'
+        }).then(() => {
+          getAllArticles()
+        })
+      }
+    })
+  }
 
   return (
     <>
@@ -210,7 +239,8 @@ export default function Articles() {
             <div class="col-12">
               <div class="bottom-form">
                 <div class="submit-btn">
-                  <input type="submit" value="افزودن" onClick={createArticle} />
+                  <input type="submit" value="افزودن" className="m-1" onClick={createArticle} />
+                  <input type="submit" value = "پیش نویس" className="m-1" onClick={saveArticleAsDraft} />
                 </div>
               </div>
             </div>
@@ -226,6 +256,7 @@ export default function Articles() {
               <th>عنوان</th>
               <th>لینک</th>
               <th>نویسنده</th>
+              <th>وضعیت</th>
               <th>ویرایش</th>
               <th>حذف</th>
             </tr>
@@ -237,6 +268,7 @@ export default function Articles() {
                 <td>{article.title}</td>
                 <td>{article.shortName}</td>
                 <td>{article.creator.name}</td>
+                <td>{article.publish === 1 ? 'منتشر شده' : "پیش نویس"}</td>
                 <td>
                   <button type="button" class="btn btn-primary edit-btn">
                     ویرایش
