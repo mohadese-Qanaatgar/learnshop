@@ -115,6 +115,35 @@ export default function Comments() {
       }
     })
   }
+  const acceptComment = (commentID) => {
+    const localStorageData = JSON.parse(localStorage.getItem('user'))
+
+    swal({
+      title : 'آیا از تایید مطمئن هستید',
+      icon : 'warning',
+      buttons : ["نه" , "آره"]
+    }).then(result => {
+      if(result) {
+        fetch(`http://localhost:4000/v1/comments/accept/${commentID}`,{
+          method : 'PUT',
+          headers : {
+            Authorization : `Bearer ${localStorageData.token}`
+          }
+        }).then(res => {
+          if(res.ok){
+            swal({
+              title : 'کامنت مورد نظر با موفقیت تایید شد',
+              icon : 'success',
+              buttons : "تایید"
+            }).then(() => {
+              getAllComments()
+            })
+          }
+        })
+      }
+    })
+  }
+
   return (
     <>
       <DataTable title="کامنت ها">
@@ -126,6 +155,7 @@ export default function Comments() {
               <th>دوره</th>
               <h>مشاهده</h>
               <th>پاسخ</th>
+              <th>تایید</th>
               <th>ویرایش</th>
               <th>حذف</th>
               <th>بن</th>
@@ -151,6 +181,13 @@ export default function Comments() {
                   onClick={() => answerToComment(comment._id)}
                   >
                     پاسخ
+                  </button>
+                </td>
+                <td>
+                  <button type="button" class="btn btn-primary edit-btn"
+                  onClick={() => acceptComment(comment._id)}
+                  >
+                   تایید
                   </button>
                 </td>
                 <td>
