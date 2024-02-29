@@ -5,6 +5,7 @@ import { useForm } from "../../../hooks/useForm";
 import Input from "../../../Components/Form/Input";
 import { minValidator } from "../../../Validators/rules";
 import Editor from "../../../Components/Form/Editor";
+import {Link} from 'react-router-dom'
 
 
 export default function Articles() {
@@ -257,6 +258,7 @@ export default function Articles() {
               <th>لینک</th>
               <th>نویسنده</th>
               <th>وضعیت</th>
+              <th>مشاهده</th>
               <th>ویرایش</th>
               <th>حذف</th>
             </tr>
@@ -269,6 +271,18 @@ export default function Articles() {
                 <td>{article.shortName}</td>
                 <td>{article.creator.name}</td>
                 <td>{article.publish === 1 ? 'منتشر شده' : "پیش نویس"}</td>
+                <td>
+                  {
+                    article.publish === 1 ? (
+                      <i className="fa fa-check"></i>
+                    )
+                    :(
+                      <Link to={`draft/${article.shortName}`}  class="btn btn-primary edit-btn">
+                    ادامه نوشتن
+                  </Link>
+                    )
+                  }
+                </td>
                 <td>
                   <button type="button" class="btn btn-primary edit-btn">
                     ویرایش
