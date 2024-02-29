@@ -16,7 +16,7 @@ export default function Comments() {
       .then((res) => res.json())
       .then((allComments) => {
         setComments(allComments);
-        console.log(allComments);
+        // console.log(allComments);
       });
   }
 
@@ -83,34 +83,36 @@ export default function Comments() {
     });
   }
   const answerToComment = (commentID) => {
+    const localStorageData = JSON.parse(localStorage.getItem('user'))
+
     swal({
-        title : 'پاسخ موردنظر را وارد کنید',
-        content : 'input',
-        buttons : 'ثبت پاسخ'
+      title : 'لطفا پاسخ مورد نظر را وارد کنید',
+      content : 'input',
+      buttons : 'ثبت'
     }).then(answerText => {
-        if(answerText){
-            const commentAnswer = {
-                body : answerText
-            }
-            fetch(`http://localhost:4000/v1/comments/answer/${commentID}`,{
-                method : 'POST',
-                headers : {
-                    'Content-Type' : 'application/json',
-                    Authorization : `Bearer ${JSON.parse(localStorage.getItem('user'))}`
-                },
-                body : JSON.stringify(commentAnswer)
-            }).then(res => {
-                if(res.ok){
-                    swal({
-                        title : 'پاسخ مورد نظر با موفقیت ثبت شد',
-                        icon : 'success',
-                        buttons : 'تایید'
-                    }).then(() => {
-                        getAllComments()
-                    })
-                }
-            })
+      if(answerText) {
+        const commentAnswer = {
+          body : answerText
         }
+        fetch(`http://localhost:4000/v1/comments/answer/${commentID}`, {
+          method : 'POST',
+          headers : {
+            'Content-Type' : 'application/json',
+            Authorization : `Bearer ${localStorageData.token}`
+          },
+          body : JSON.stringify(commentAnswer)
+        }).then(res => {
+          if(res.ok){
+           swal({
+            title : 'پاسخ شما ثبت شد',
+            icon : 'success',
+            buttons : 'تایید'
+           }).then(() => {
+            getAllComments()
+           })
+          }
+        })
+      }
     })
   }
   return (
@@ -135,9 +137,8 @@ export default function Comments() {
                 <td
                 className={comment.answer === 1 ? 'answer-comment' : 'no-answer-comment'}
                 >{index + 1}</td>
-                {/* <td>{comment.creator.name}</td> */}
+                <td>{comment.creator.name}</td>
                 <td>{comment.course}</td>
-                <td></td>
                 <td>
                   <button type="button" class="btn btn-primary edit-btn"
                   onClick={() => {showCommentBody(comment.body)}}
