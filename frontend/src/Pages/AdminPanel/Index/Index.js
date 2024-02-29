@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import DataTable from "../DataTable/DataTable";
+import PAdminItem from "../../../Components/AdminPanel/PAdminItem/PAdminItem";
 
 import "./Index.css";
 
@@ -36,86 +37,11 @@ export default function Index() {
           </div>
           <div class="home-content-boxes">
             <div class="row">
-              <div className="col-4">
-                <div className="home-content-revanue box">
-                  <div className="home-box">
-                    <div className="home-box-left">
-                      <div className="home-box-title">
-                        <span>درآمد</span>
-                      </div>
-                      <div className="home-box-value">
-                        <div className="home-box-price">
-                          <span>$2,420</span>
-                        </div>
-                        <div className="home-box-result">
-                          <span>+5.2%</span>
-                        </div>
-                        <div className="home-box-text">
-                          <span>درآمد در یک ماه گذشته</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="home-box-left">
-
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="col-4">
-                <div className="home-content-revanue box">
-                  <div className="home-box">
-                    <div className="home-box-left">
-                      <div className="home-box-title">
-                        <span>فروش</span>
-                      </div>
-                      <div className="home-box-value">
-                        <div className="home-box-price">
-                          <span>$2,420</span>
-                        </div>
-                        <div className="home-box-result">
-                          <span>+5.2%</span>
-                        </div>
-                        <div className="home-box-text">
-                          <span>درآمد در یک ماه گذشته</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="home-box-left">
-                        
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="col-4">
-                <div className="home-content-revanue box">
-                  <div className="home-box">
-                    <div className="home-box-left">
-                      <div className="home-box-title">
-                        <span>هزینه</span>
-                      </div>
-                      <div className="home-box-value">
-                        <div className="home-box-price">
-                          <span>$2,420</span>
-                        </div>
-                        <div className="home-box-result">
-                          <span>+5.2%</span>
-                        </div>
-                        <div className="home-box-text">
-                          <span>درآمد در یک ماه گذشته</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="home-box-left">
-                        
-                    </div>
-                  </div>
-                </div>
-              </div>
-              {/* {
+              {
                  infos.map(item => (
                    <PAdminItem {...item} />
                  ))
-              } */}
+              }
             </div>
           </div>
 
