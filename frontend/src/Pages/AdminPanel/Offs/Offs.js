@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Input from '../../../Components/Form/Input'
 import { useForm } from '../../../hooks/useForm'
 import { minValidator  } from '../../../Validators/rules'
 
 export default function Offs() {
+    const [courses , setCourses] = useState([])
+    const [offCourse , setOffCourse] = useState('-1')
     const [formState, onInputHandler] = useForm(
         {
             code: {
@@ -21,6 +23,18 @@ export default function Offs() {
         },
         false
       );
+
+      useEffect(() => {
+        getAllCourses()
+      },[])
+
+    function getAllCourses () {
+        fetch(`http://localhost:4000/v1/courses`)
+        .then(res => res.json())
+        .then(allCourses => {
+            setCourses(allCourses)
+        })
+    }
   return (
     <>
     <div class="container-fluid" id="home-content">
@@ -76,8 +90,11 @@ export default function Offs() {
                 <label class="input-title" style={{ display: "block" }}>
                   دوره
                 </label>
-                <select class="select" >
+                <select class="select" onClick={event => setOffCourse(event.target.value)}>
                     <option value="-1">دوره مدنظر را انتخاب کنید</option>
+                    {courses.map(course => (
+                        <option key={course._id} value={course._id}>{course.name}</option>
+                    ))}
                 </select>
                 <span class="error-message text-danger"></span>
               </div>
