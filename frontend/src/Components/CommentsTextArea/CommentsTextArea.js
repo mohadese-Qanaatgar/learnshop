@@ -6,6 +6,7 @@ import "./CommentsTextArea.css";
 
 export default function CommentsTextArea({ comments, submitComment }) {
   const [newCommentBody, setNewCommentBody] = useState("");
+  const [commentScore , setCommentScore] = useState('-1')
   const authContext = useContext(AuthContext);
 
   const onChangeHandler = (event) => {
@@ -151,11 +152,23 @@ export default function CommentsTextArea({ comments, submitComment }) {
           <div class="comments__respond">
             <div class="comments__score">
               <span class="comments__score-title">امتیاز شما</span>
-              <div class="comments__score-input">
+              {/* <div class="comments__score-input">
                 <span class="comments__score-input-text">
                   امتیاز خود را انتخاب کنید
                 </span>
                 <i class="fas fa-angle-down	 comments__input-icon"></i>
+              </div> */}
+              <div className='col-12'>               
+              <select className="form-select form-control font-bold"
+              onClick={(event) => setCommentScore(event.target.value)}
+              >
+                <option value='-1' className="form-control">امتیاز خودر را انتخاب کنید</option>
+                <option value="5">عالی</option>
+                <option value="4">خیلی خوب</option>
+                <option value="3">خوب</option>
+                <option value="2">ضعیف</option>
+                <option value="1">بد</option>
+              </select>
               </div>
             </div>
             <div class="comments__respond-content">
@@ -170,7 +183,7 @@ export default function CommentsTextArea({ comments, submitComment }) {
             <button
               type="submit"
               class="comments__respond-btn"
-              onClick={() => submitComment(newCommentBody)}
+              onClick={() => submitComment(newCommentBody , commentScore)}
             >
               ارسال
             </button>

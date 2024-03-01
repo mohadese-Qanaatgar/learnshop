@@ -19,6 +19,8 @@ import Sessions from "./Pages/AdminPanel/Sessions/Sessions";
 import Session from "./Pages/Session/Session";
 import Comments from "./Pages/AdminPanel/Comments/Comments";
 import Offs from "./Pages/AdminPanel/Offs/Offs";
+import Draft from "./Pages/AdminPanel/Articles/Draft";
+import PAdminIndex from './Pages/AdminPanel/Index/Index'
 
 const routes = [
   { path: "/", element: <Index /> },
@@ -37,6 +39,10 @@ const routes = [
     element: <AdminPanel />,
     children: [
       {
+        path: "",
+        element: <PAdminIndex />,
+      },
+      {
         path: "users",
         element: <Users />,
       },
@@ -51,6 +57,10 @@ const routes = [
       {
         path: "articles",
         element: <AdminArticles />,
+      },
+      {
+        path: "articles/draft/:shortName",
+        element: <Draft />,
       },
       {
         path: "category",
