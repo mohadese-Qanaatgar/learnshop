@@ -105,6 +105,38 @@ export default function CourseInfo() {
           })
         }
       })
+    } else {
+      swal({
+        title : 'آیا از ثبت نام در دوره اطمینان دارید؟',
+        icon: 'success',
+        buttons : ['نه','آره']
+      }).then(result => {
+        if(result) {
+          swal({
+            title : 'در صورت داشتن کد تخفیف آن را وارد کنید',
+            content : 'input',
+            buttons : ["ثبت نام بدون کد تخفیف","اعمال کد تخفیف"]
+          }).then(result => {
+            console.log(result === null);
+            if(result === null){
+                fetch(`http://localhost:4000/v1/courses/${course._id}/register` , {
+                  method : 'POST',
+                  headers : {
+                    Authorization : `Bearer ${localStorageData.token}`
+                  }
+                }).then(res => {
+                  if(res.ok) {
+                    swal({
+                      title : 'با موفقیت ثبت نام شدید',
+                      icon : 'success',
+                      buttons : 'تایید'
+                    })
+                  }
+                })
+            }
+          })
+        }
+      })
     }
   }
   return (
