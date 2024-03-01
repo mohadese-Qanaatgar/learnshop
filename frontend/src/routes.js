@@ -21,6 +21,7 @@ import Comments from "./Pages/AdminPanel/Comments/Comments";
 import Offs from "./Pages/AdminPanel/Offs/Offs";
 import Draft from "./Pages/AdminPanel/Articles/Draft";
 import PAdminIndex from './Pages/AdminPanel/Index/Index'
+import UserPanel from "./Pages/UserPanel/Index";
 
 const routes = [
   { path: "/", element: <Index /> },
@@ -84,6 +85,11 @@ const routes = [
       }
     ],
   },
-];
+  {
+    path: "/my-account/*",
+    element: <UserPanel/>,
+    children: []
+  }
+]
 
 export default routes;
