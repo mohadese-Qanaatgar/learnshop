@@ -24,6 +24,10 @@ export default function CourseInfo() {
   const { courseName } = useParams();
 
   useEffect(() => {
+    getCourseDetailes()
+  }, []);
+
+  function getCourseDetailes () {
     const localStorageData = JSON.parse(localStorage.getItem("user"));
     fetch(`http://localhost:4000/v1/courses/${courseName}`, {
       method: "GET",
@@ -35,7 +39,7 @@ export default function CourseInfo() {
     })
       .then((res) => res.json())
       .then((courseInfo) => {
-        console.log(courseInfo);
+        // console.log(courseInfo);
         setComments(courseInfo.comments);
         setSessions(courseInfo.sessions);
         setCreatedAt(courseInfo.createdAt);
@@ -43,9 +47,9 @@ export default function CourseInfo() {
         setCourseDetailes(courseInfo);
         setCourseTeacher(courseInfo.creator)
         setCourseCategory(courseInfo.categoryID)
-        console.log(courseInfo);
+        // console.log(courseInfo);
       });
-  }, []);
+  }
 
   const submitComment = (newCommentBody) => {
     const localStorageData = JSON.parse(localStorage.getItem("user"));
@@ -64,13 +68,45 @@ export default function CourseInfo() {
     })
       .then((res) => res.json())
       .then((result) => {
-        console.log(result)});
+        console.log(result)}
+        );
         swal ( {
           title : 'کامنت شما ثبت شد',
           icon: 'success',
           button : 'تایید'
+        }).then(() => {
+          getCourseDetailes()
         })
   };
+  const registerInCourse = (course) => {
+    const localStorageData = JSON.parse(localStorage.getItem("user"));
+
+    console.log(course);
+    if(course.price === 0) {
+      swal({
+        title : 'آیا از ثبت نام در دوره اطمینان دارید؟',
+        icon: 'success',
+        buttons : ['نه','آره']
+      }).then(result => {
+        if(result) {
+          fetch(`http://localhost:4000/v1/courses/${course._id}/register` , {
+            method : 'POST',
+            headers : {
+              Authorization : `Bearer ${localStorageData.token}`
+            }
+          }).then(res => {
+            if(res.ok) {
+              swal({
+                title : 'با موفقیت ثبت نام شدید',
+                icon : 'success',
+                buttons : 'تایید'
+              })
+            }
+          })
+        }
+      })
+    }
+  }
   return (
     <>
       <Topbar />
@@ -374,8 +410,7 @@ export default function CourseInfo() {
                         دانشجوی دوره هستید
                       </span>
                     ) : (
-                      <span className="course-info__register-title">
-                        <i className="fas fa-graduation-cap course-info__register-icon"></i>
+                      <span className="course-info__register-title" onClick={() => registerInCourse(courseDetailes)}>
                         ثبت نام در دوره
                       </span>
                     )}
