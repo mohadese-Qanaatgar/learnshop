@@ -67,7 +67,7 @@ export default function CourseBox(props) {
           <div className="course-box__status">
             <div className="course-box__users">
               <i className="fas fa-users course-box__users-icon"></i>
-              <span className="course-box__users-text">{props.discount}</span>
+              <span className="course-box__users-text">{props.registers}</span>
             </div>
             <span className="course-box__price">
               {props.price === 0 ? (
