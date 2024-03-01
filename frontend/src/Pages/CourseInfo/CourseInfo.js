@@ -8,7 +8,7 @@ import CourseDetailBox from "../../Components/CourseDetailBox/CourseDetailBox";
 import CommentsTextArea from "../../Components/CommentsTextArea/CommentsTextArea";
 import Accordion from "react-bootstrap/Accordion";
 import { useParams } from "react-router-dom";
-import swal from 'sweetalert'
+import swal from "sweetalert";
 import { Link } from "react-router-dom";
 
 export default function CourseInfo() {
@@ -18,18 +18,26 @@ export default function CourseInfo() {
   const [updatedAt, setUpdatedAt] = useState("");
   const [score, setScore] = useState(5);
   const [courseDetailes, setCourseDetailes] = useState({});
-  const [courseTeacher , setCourseTeacher] =useState({})
-  const [courseCategory , setCourseCategory] = useState([])
+  const [courseTeacher, setCourseTeacher] = useState({});
+  const [courseCategory, setCourseCategory] = useState([]);
+  const [relatedCourses, setRelatedCourses] = useState([]);
 
   const { courseName } = useParams();
 
   useEffect(() => {
-
     getCourseDetailes()
   }, []);
 
   function getCourseDetailes () {
+    fetch(`http://localhost:4000/v1/courses/related/${courseName}`)
+      .then((res) => res.json())
+      .then((allData) => {
+        console.log(allData);
+        setRelatedCourses(allData);
+      });
+  }
 
+  function getCourseDetailes() {
     const localStorageData = JSON.parse(localStorage.getItem("user"));
     fetch(`http://localhost:4000/v1/courses/${courseName}`, {
       method: "GET",
@@ -47,13 +55,13 @@ export default function CourseInfo() {
         setCreatedAt(courseInfo.createdAt);
         setUpdatedAt(courseInfo.updatedAt);
         setCourseDetailes(courseInfo);
-        setCourseTeacher(courseInfo.creator)
-        setCourseCategory(courseInfo.categoryID)
+        setCourseTeacher(courseInfo.creator);
+        setCourseCategory(courseInfo.categoryID);
         // console.log(courseInfo);
       });
   }
 
-  const submitComment = (newCommentBody,commentScore) => {
+  const submitComment = (newCommentBody, commentScore) => {
     const localStorageData = JSON.parse(localStorage.getItem("user"));
 
     fetch(`http://localhost:4000/v1/comments`, {
@@ -65,20 +73,20 @@ export default function CourseInfo() {
       body: JSON.stringify({
         body: newCommentBody,
         courseShortName: courseName,
-        score: commentScore
+        score: commentScore,
       }),
     })
       .then((res) => res.json())
       .then((result) => {
-        console.log(result)}
-        );
-        swal ( {
-          title : 'کامنت شما ثبت شد',
-          icon: 'success',
-          button : 'تایید'
-        }).then(() => {
-          getCourseDetailes()
-        })
+        console.log(result);
+      });
+    swal({
+      title: "کامنت شما ثبت شد",
+      icon: "success",
+      button: "تایید",
+    }).then(() => {
+      getCourseDetailes();
+    });
   };
   // const registerInCourse = (course) => {
   //   const localStorageData = JSON.parse(localStorage.getItem("user"));
@@ -312,7 +320,8 @@ export default function CourseInfo() {
                         "Content-Type": "application/json",
                       },
                       body: JSON.stringify({
-                        price: course.price - (course.price * code.percent / 100)
+                        price:
+                          course.price - (course.price * code.percent) / 100,
                       }),
                     }
                   ).then((res) => {
@@ -532,56 +541,50 @@ export default function CourseInfo() {
                         <Accordion.Header> جلسات دوره</Accordion.Header>
                         {sessions.map((session, index) => (
                           <Accordion.Body>
-                            {
-                              (session.free === 1 || courseDetailes.isUserRegisteredToThisCourse) ?
-                              (
-                                <>
-                                 <div className="accordion-body introduction__accordion-body">
-                              <div className="introduction__accordion-right">
-                                <span className="introduction__accordion-count">
-                                  {index + 1}
-                                </span>
-                                <i className="fab fa-youtube introduction__accordion-icon"></i>
-                                <Link
-                                 to={`/${courseName}/${session._id}`}
-                                  className="introduction__accordion-link"
-                                >
-                                  {session.title}
-                                </Link>
-                              </div>
-                              <div className="introduction__accordion-left">
-                                <span className="introduction__accordion-time">
-                                  {session.time}
-                                </span>
-                              </div>
-                            </div>
-                                </>
-                              ) :
-                              (
-                                <>
-                                 <div className="accordion-body introduction__accordion-body">
-                              <div className="introduction__accordion-right">
-                                <span className="introduction__accordion-count">
-                                  {index + 1}
-                                </span>
-                                <i className="fab fa-youtube introduction__accordion-icon"></i>
-                                <span
-                                  className="introduction__accordion-link"
-                                >
-                                  {session.title}
-                                </span>
-                              </div>
-                              <div className="introduction__accordion-left">
-                                <span className="introduction__accordion-time">
-                                 {session.time}
-                                </span>
-                                <i className="fa fa-lock"></i>
-                              </div>
-                            </div>
-                                </>
-                              )
-                            }
-                           
+                            {session.free === 1 ||
+                            courseDetailes.isUserRegisteredToThisCourse ? (
+                              <>
+                                <div className="accordion-body introduction__accordion-body">
+                                  <div className="introduction__accordion-right">
+                                    <span className="introduction__accordion-count">
+                                      {index + 1}
+                                    </span>
+                                    <i className="fab fa-youtube introduction__accordion-icon"></i>
+                                    <Link
+                                      to={`/${courseName}/${session._id}`}
+                                      className="introduction__accordion-link"
+                                    >
+                                      {session.title}
+                                    </Link>
+                                  </div>
+                                  <div className="introduction__accordion-left">
+                                    <span className="introduction__accordion-time">
+                                      {session.time}
+                                    </span>
+                                  </div>
+                                </div>
+                              </>
+                            ) : (
+                              <>
+                                <div className="accordion-body introduction__accordion-body">
+                                  <div className="introduction__accordion-right">
+                                    <span className="introduction__accordion-count">
+                                      {index + 1}
+                                    </span>
+                                    <i className="fab fa-youtube introduction__accordion-icon"></i>
+                                    <span className="introduction__accordion-link">
+                                      {session.title}
+                                    </span>
+                                  </div>
+                                  <div className="introduction__accordion-left">
+                                    <span className="introduction__accordion-time">
+                                      {session.time}
+                                    </span>
+                                    <i className="fa fa-lock"></i>
+                                  </div>
+                                </div>
+                              </>
+                            )}
                           </Accordion.Body>
                         ))}
                       </Accordion.Item>
@@ -611,7 +614,7 @@ export default function CourseInfo() {
                       <i className="fas fa-chalkboard-teacher techer-details__header-icon"></i>
                       <span className="techer-details__header-name">
                         {courseTeacher.role}
-                        </span>
+                      </span>
                     </div>
                   </div>
                   <p className="techer-details__footer">
@@ -638,7 +641,10 @@ export default function CourseInfo() {
                         دانشجوی دوره هستید
                       </span>
                     ) : (
-                      <span className="course-info__register-title" onClick={() => registerInCourse(courseDetailes)}>
+                      <span
+                        className="course-info__register-title"
+                        onClick={() => registerInCourse(courseDetailes)}
+                      >
                         ثبت نام در دوره
                       </span>
                     )}
@@ -696,61 +702,32 @@ export default function CourseInfo() {
                     کلیک کنید
                   </span>
                 </div>
+                {relatedCourses.lenght !== 0 && 
+                (
+
                 <div className="course-info">
                   <span className="course-info__courses-title">
                     دوره های مرتبط
                   </span>
                   <ul className="course-info__courses-list">
-                    <li className="course-info__courses-list-item">
-                      <a href="#" className="course-info__courses-link">
-                        <img
-                          src="/images/courses/js_project.png"
-                          alt="Course Cover"
-                          className="course-info__courses-img"
-                        />
-                        <span className="course-info__courses-text">
-                          پروژه های تخصصی با جاوا اسکریپت
-                        </span>
-                      </a>
-                    </li>
-                    <li className="course-info__courses-list-item">
-                      <a href="#" className="course-info__courses-link">
-                        <img
-                          src="/images/courses/fareelancer.png"
-                          alt="Course Cover"
-                          className="course-info__courses-img"
-                        />
-                        <span className="course-info__courses-text">
-                          تعیین قیمت پروژه های فریلنسری
-                        </span>
-                      </a>
-                    </li>
-                    <li className="course-info__courses-list-item">
-                      <a href="#" className="course-info__courses-link">
-                        <img
-                          src="/images/courses/nodejs.png"
-                          alt="Course Cover"
-                          className="course-info__courses-img"
-                        />
-                        <span className="course-info__courses-text">
-                          دوره Api نویسی
-                        </span>
-                      </a>
-                    </li>
-                    <li className="course-info__courses-list-item">
-                      <a href="#" className="course-info__courses-link">
-                        <img
-                          src="/images/courses/jango.png"
-                          alt="Course Cover"
-                          className="course-info__courses-img"
-                        />
-                        <span className="course-info__courses-text">
-                          متخصص جنگو
-                        </span>
-                      </a>
-                    </li>
+                    {relatedCourses.map((course) => (
+                      <li className="course-info__courses-list-item">
+                        <Link to={`/course-info/${course.shortName}`} className="course-info__courses-link">
+                          <img
+                            src={`http://localhost:4000/courses/covers/${course.cover}`}
+                            alt="Course Cover"
+                            className="course-info__courses-img"
+                          />
+                          <span className="course-info__courses-text">
+                            {course.name}
+                          </span>
+                        </Link>
+                      </li>
+                    ))}
                   </ul>
                 </div>
+                )
+                }
               </div>
             </div>
           </div>
