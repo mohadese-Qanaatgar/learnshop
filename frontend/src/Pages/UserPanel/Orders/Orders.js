@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-
+import { Link } from "react-router-dom";
 import "./Orders.css";
 
 export default function Orders() {
@@ -20,6 +20,17 @@ export default function Orders() {
       });
   }, []);
 
+  const showOrderDetailes = (orderID) => {
+    fetch(`http://localhost:4000/v1/orders/${orderID}`,{
+      method : 'GET',
+      headers : {
+        Authorization : `Bearer ${JSON.parse(localStorage.getItem('user')).token}`
+      }
+    }).then(res => res.json())
+    .then(result => {
+      console.log(result);
+    })
+  }
   return (
     <div class="col-9">
       <div class="order">
@@ -50,10 +61,10 @@ export default function Orders() {
                 <td class="order__table-body-item">
                  {order.price}
                 </td>
-                <td class="order__table-body-item">
-                  <a class="order__table-body-btn" href="#">
+                <td class="order__table-body-item" onClick={() => showOrderDetailes(order._id)}>
+                  <Link to={`orderdetaile/${order._id}`} class="order__table-body-btn" >
                     نمایش
-                  </a>
+                  </Link>
                 </td>
               </tr>
             ))}
