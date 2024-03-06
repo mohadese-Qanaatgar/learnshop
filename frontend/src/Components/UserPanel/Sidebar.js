@@ -53,9 +53,9 @@ export default function Sidebar() {
             </a>
           </li>
           <li class="sidebar__item">
-            <a class="sidebar__link" href="#">
+            <Link to='buyed' class="sidebar__link" >
               دوره های خریداری شده
-            </a>
+            </Link>
           </li>
           <li class="sidebar__item">
             <a class="sidebar__link" href="#">
