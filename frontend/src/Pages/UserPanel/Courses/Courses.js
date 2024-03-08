@@ -106,7 +106,10 @@ export default function Courses() {
         <div class="main">
           <div class="row">
             <div class="col-12">
-              {shownCourses.map((course) => (
+              {
+                shownCourses.length !== 0 ? (
+                  <>
+                    {shownCourses.map((course) => (
                 <div class="main__box">
                   <div class="main__box-right">
                     <a class="main__box-img-link" href="#">
@@ -141,6 +144,14 @@ export default function Courses() {
                   </div>
                 </div>
               ))}
+                  </>
+                ) : (
+                  <div className="alert alert-danger">
+                    دوراه ای وجود ندارد
+                    </div>
+                )
+              }
+            
             </div>
           </div>
         </div>
