@@ -5,11 +5,27 @@ import "./SendTicket.css";
 export default function SendTicket() {
   const [departments, setDepartments] = useState([]);
   const [departmentsSubs, setDepartmentsSubs] = useState([]);
+  const [courses , setCourses] = useState([])
+  const [ticketTypeID , setTicketTypeID] = useState('')
 
   useEffect(() => {
     fetch(`http://localhost:4000/v1/tickets/departments`)
       .then((res) => res.json())
       .then((data) => setDepartments(data));
+
+      fetch(`http://localhost:4000/v1/users/courses/`, {
+        headers: {
+          Authorization: `Bearer ${
+            JSON.parse(localStorage.getItem("user")).token
+          }`,
+        },
+      })
+        .then((res) => res.json())
+        .then(data => {
+          setCourses(data)
+          console.log(courses);
+        })
+          
   }, []);
 
   const getDepartmentsSub = (departmentID) => {
@@ -45,7 +61,7 @@ export default function SendTicket() {
             </div>
             <div class="col-6">
               <label class="ticket-form__label">نوع تیکت را انتخاب کنید:</label>
-              <select class="ticket-form__select">
+              <select class="ticket-form__select" onChange={(event) => setTicketTypeID(event.target.value)}>
                 <option class="ticket-form__option">
                   لطفا یک مورد را انتخاب نمایید.
                 </option>
@@ -70,6 +86,20 @@ export default function SendTicket() {
                 <option class="ticket-form__option">ارتباط با مدیریت</option>
               </select>
             </div>
+           {
+           ticketTypeID === '63b688c5516a30a651e98156' && <div class="col-6">
+              <label class="ticket-form__label">دوره را انتخاب کنید:</label>
+              <select class="ticket-form__select">
+                <option class="ticket-form__option">
+                  لطفا یک مورد را انتخاب نمایید.
+                </option>
+                {
+                  courses.map(course => (
+                    <option value={course._id} key={course._id} >{course.course.name}</option>
+                  ))
+                }
+              </select>
+            </div>}
             <div class="col-12">
               <label class="ticket-form__label">
                 محتوای تیکت را وارد نمایید:
