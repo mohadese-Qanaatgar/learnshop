@@ -58,9 +58,9 @@ export default function Sidebar() {
             </Link>
           </li>
           <li class="sidebar__item">
-            <a class="sidebar__link" href="#">
+            <Link to='send-ticket' class="sidebar__link">
               تیکت های پشتیبانی
-            </a>
+            </Link>
           </li>
           <li class="sidebar__item" onClick={logoutUser}>
             <a class="sidebar__link" href="#">

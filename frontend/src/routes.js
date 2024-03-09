@@ -21,11 +21,13 @@ import Comments from "./Pages/AdminPanel/Comments/Comments";
 import Offs from "./Pages/AdminPanel/Offs/Offs";
 import Draft from "./Pages/AdminPanel/Articles/Draft";
 import PAdminIndex from './Pages/AdminPanel/Index/Index'
+
 import UserPanel from "./Pages/UserPanel/Index";
 import UserPanelIndex from './Pages/UserPanel/Index/Index'
 import UserPanelOrders from "./Pages/UserPanel/Orders/Orders";
 import OrderDetaile from "./Pages/UserPanel/OrderDetaile/OrderDetaile";
 import UserPanelCourses from './Pages/UserPanel/Courses/Courses'
+import SendTicket from './Pages/UserPanel/Tickets/SendTicket'
 
 const routes = [
   { path: "/", element: <Index /> },
@@ -108,7 +110,11 @@ const routes = [
       {
         path: "buyed",
         element: <UserPanelCourses/>,
+      },
+      {
+        path : "send-ticket" , element : <SendTicket/>
       }
+     
     ]
   }
 ]
