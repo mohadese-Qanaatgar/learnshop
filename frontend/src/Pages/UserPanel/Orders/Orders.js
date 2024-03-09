@@ -15,22 +15,15 @@ export default function Orders() {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         setOrders(data);
       });
   }, []);
   
 
   const showOrderDetailes = (orderID) => {
-    fetch(`http://localhost:4000/v1/orders/${orderID}`,{
-      method : 'GET',
-      headers : {
-        Authorization : `Bearer ${JSON.parse(localStorage.getItem('user')).token}`
-      }
-    }).then(res => res.json())
-    .then(result => {
-      console.log(result);
-    })
+
+      console.log('order');
   }
   return (
     <div class="col-9">
