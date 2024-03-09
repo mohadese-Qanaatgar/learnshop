@@ -30,8 +30,7 @@ export default function SendTicket() {
         .then(data => {
           setCourses(data)
           console.log(courses);
-        })
-          
+        }) 
   }, []);
 
   const getDepartmentsSub = (departmentID) => {
