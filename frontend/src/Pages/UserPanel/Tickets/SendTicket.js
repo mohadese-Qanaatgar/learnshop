@@ -7,6 +7,12 @@ export default function SendTicket() {
   const [departmentsSubs, setDepartmentsSubs] = useState([]);
   const [courses , setCourses] = useState([])
   const [ticketTypeID , setTicketTypeID] = useState('')
+  const [departmentID , setDepartmentID] = useState('')
+  const [title , setTitle] = useState('')
+  const [priority , setPriority] = useState('')
+  const [body , setBody] = useState('')
+  const [courseID , setCourseID] = useState('')
+
 
   useEffect(() => {
     fetch(`http://localhost:4000/v1/tickets/departments`)
@@ -34,6 +40,32 @@ export default function SendTicket() {
       .then((subs) => setDepartmentsSubs(subs));
   };
 
+  const sendTicket = (event) => {
+    event.preventDefault()
+    const newTicketInfos = {
+      departmentID,
+      departmentSubID : ticketTypeID,
+      title,
+      priority,
+      body,
+      course : courseID.length ? courseID : undefined
+    }
+    fetch(`http://localhost:4000/v1/tickets`,{
+      method : "POST",
+      headers : {
+        'Content-Type' : 'application/json',
+        Authorization: `Bearer ${
+          JSON.parse(localStorage.getItem("user")).token
+        }`,
+      },
+      body : JSON.stringify(newTicketInfos)
+    }).then(res => {
+      console.log(res);
+      return res.json()
+    }).then(data => {
+      console.log(data);
+    })
+  }
   return (
     <div class="col-9">
       <div class="ticket">
@@ -49,7 +81,10 @@ export default function SendTicket() {
               <label class="ticket-form__label">دپارتمان را انتخاب کنید:</label>
               <select
                 class="ticket-form__select"
-                onChange={(event) => getDepartmentsSub(event.target.value)}
+                onChange={(event) => {
+                  getDepartmentsSub(event.target.value)
+                  setDepartmentID(event.target.value)
+                }}
               >
                 <option class="ticket-form__option">
                   لطفا یک مورد را انتخاب نمایید.
@@ -72,24 +107,23 @@ export default function SendTicket() {
             </div>
             <div class="col-6">
               <label class="ticket-form__label">عنوان تیکت را وارد کنید:</label>
-              <input class="ticket-form__input" type="text" />
+              <input class="ticket-form__input" type="text" onChange={(event) => setTitle(event.target.value)} />
             </div>
             <div class="col-6">
-              <label class="ticket-form__label">دپارتمان را انتخاب کنید:</label>
-              <select class="ticket-form__select">
+              <label class="ticket-form__label">سطح اولویت را انتخاب کنید:</label>
+              <select class="ticket-form__select" onChange={(event) => setPriority(event.target.value)}>
                 <option class="ticket-form__option">
                   لطفا یک مورد را انتخاب نمایید.
                 </option>
-                <option class="ticket-form__option">پشتیبانی</option>
-                <option class="ticket-form__option">مشاوره</option>
-                <option class="ticket-form__option">مالی</option>
-                <option class="ticket-form__option">ارتباط با مدیریت</option>
+                <option value='3' class="ticket-form__option">کم</option>
+                <option value='2' class="ticket-form__option">متوسط</option>
+                <option value='1' class="ticket-form__option">بالا</option>
               </select>
             </div>
            {
            ticketTypeID === '63b688c5516a30a651e98156' && <div class="col-6">
               <label class="ticket-form__label">دوره را انتخاب کنید:</label>
-              <select class="ticket-form__select">
+              <select class="ticket-form__select" onChange={(event) => setCourseID(event.target.value)}>
                 <option class="ticket-form__option">
                   لطفا یک مورد را انتخاب نمایید.
                 </option>
@@ -104,7 +138,7 @@ export default function SendTicket() {
               <label class="ticket-form__label">
                 محتوای تیکت را وارد نمایید:
               </label>
-              <textarea class="ticket-form__textarea"></textarea>
+              <textarea class="ticket-form__textarea" onChange={(event) => setBody(event.target.value)}></textarea>
             </div>
             <div class="col-12">
               <div class="ticket-form__file">
@@ -118,7 +152,7 @@ export default function SendTicket() {
               </div>
             </div>
             <div class="col-12">
-              <button class="ticket-form__btn">
+              <button class="ticket-form__btn" onClick={sendTicket}>
                 <i class="ticket-form__btn-icon fa fa-paper-plane"></i>
                 ارسال تیکت
               </button>
