@@ -20,6 +20,7 @@ export default function Tickets() {
       });
   }, []);
 
+  
   return (
     <div class="col-9">
       <div class="ticket">
