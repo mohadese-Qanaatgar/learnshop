@@ -58,7 +58,7 @@ export default function Sidebar() {
             </Link>
           </li>
           <li class="sidebar__item">
-            <Link to='send-ticket' class="sidebar__link">
+            <Link to='tickets' class="sidebar__link">
               تیکت های پشتیبانی
             </Link>
           </li>
