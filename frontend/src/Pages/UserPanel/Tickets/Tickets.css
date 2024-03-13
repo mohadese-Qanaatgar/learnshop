@@ -189,8 +189,14 @@
     margin: auto;
     width: 1rem;
     height: 1rem;
-    background-color: rgb(46, 204, 113);
+    /* background-color: rgb(46, 204, 113); */
     border-radius: 50%;
+  }
+  .ticket-content__condition__no-answer::before{
+    background-color: #f0932b;
+  }
+  .ticket-content__condition__answered::before{
+    background-color: rgb(46, 204, 113);
   }
   .ticket-content__condition-text {
     font-size: 1.3rem;
