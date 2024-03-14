@@ -30,6 +30,7 @@ import UserPanelCourses from './Pages/UserPanel/Courses/Courses'
 import SendTicket from './Pages/UserPanel/Tickets/SendTicket'
 import UserPanelTickets from './Pages/UserPanel/Tickets/Tickets'
 import UserPanelTicketAnswer from "./Pages/UserPanel/Tickets/TicketAnswer";
+import UserPanelEditAccount from './Pages/UserPanel/EditAccount/EditAccount'
 
 const routes = [
   { path: "/", element: <Index /> },
@@ -121,8 +122,10 @@ const routes = [
       },
       {
         path : "tickets/answer/:id" , element : <UserPanelTicketAnswer/>
+      },
+      {
+        path : "edit-account" , element : <UserPanelEditAccount/>
       }
-     
     ]
   }
 ]

@@ -33,9 +33,9 @@ export default function Sidebar() {
         <span class="sidebar__name">محمدامین سعیدی راد</span>
         <ul class="sidebar__list">
           <li class="sidebar__item">
-            <a class="sidebar__link" href="#">
+            <Link to='/my-account' class="sidebar__link" >
               پیشخوان
-            </a>
+            </Link>
           </li>
           <li class="sidebar__item">
             <Link to='orders' class="sidebar__link">
@@ -48,9 +48,9 @@ export default function Sidebar() {
             </a>
           </li>
           <li class="sidebar__item">
-            <a class="sidebar__link" href="#">
+            <Link to='edit-account' class="sidebar__link" >
               جزئیات حساب کاربری
-            </a>
+            </Link>
           </li>
           <li class="sidebar__item">
             <Link to='buyed' class="sidebar__link" >
