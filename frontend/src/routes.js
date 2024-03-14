@@ -8,6 +8,7 @@ import Articles from "./Pages/Articles/Articles";
 import Register from "./Pages/Register/Register";
 import Contact from "./Pages/Contact/Contact";
 import Search from "./Pages/Search/Search";
+
 import AdminPanel from "./Pages/AdminPanel/Index";
 import Users from "./Pages/AdminPanel/Users/Users";
 import AdminCourses from "./Pages/AdminPanel/Courses/Courses";
@@ -21,6 +22,8 @@ import Comments from "./Pages/AdminPanel/Comments/Comments";
 import Offs from "./Pages/AdminPanel/Offs/Offs";
 import Draft from "./Pages/AdminPanel/Articles/Draft";
 import PAdminIndex from "./Pages/AdminPanel/Index/Index";
+import Tickets from "./Pages/AdminPanel/Tickets/Tickets";
+
 
 import UserPanel from "./Pages/UserPanel/Index";
 import UserPanelIndex from "./Pages/UserPanel/Index/Index";
@@ -98,6 +101,10 @@ const routes = [
         path: "offs",
         element: <Offs />,
       },
+      {
+        path: "tickets",
+        element: <Tickets />,
+      }
     ],
   },
   {
