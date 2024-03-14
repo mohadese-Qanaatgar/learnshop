@@ -13,24 +13,26 @@ import Users from "./Pages/AdminPanel/Users/Users";
 import AdminCourses from "./Pages/AdminPanel/Courses/Courses";
 import Menus from "./Pages/AdminPanel/Menus/Menus";
 import AdminArticles from "./Pages/AdminPanel/Articles/Articles";
-import AdminCategory from './Pages/AdminPanel/Category/Category'
-import AdminContact from './Pages/AdminPanel/Contact/Contact'
+import AdminCategory from "./Pages/AdminPanel/Category/Category";
+import AdminContact from "./Pages/AdminPanel/Contact/Contact";
 import Sessions from "./Pages/AdminPanel/Sessions/Sessions";
 import Session from "./Pages/Session/Session";
 import Comments from "./Pages/AdminPanel/Comments/Comments";
 import Offs from "./Pages/AdminPanel/Offs/Offs";
 import Draft from "./Pages/AdminPanel/Articles/Draft";
-import PAdminIndex from './Pages/AdminPanel/Index/Index'
+import PAdminIndex from "./Pages/AdminPanel/Index/Index";
 
 import UserPanel from "./Pages/UserPanel/Index";
-import UserPanelIndex from './Pages/UserPanel/Index/Index'
+import UserPanelIndex from "./Pages/UserPanel/Index/Index";
 import UserPanelOrders from "./Pages/UserPanel/Orders/Orders";
 import OrderDetaile from "./Pages/UserPanel/OrderDetaile/OrderDetaile";
-import UserPanelCourses from './Pages/UserPanel/Courses/Courses'
-import SendTicket from './Pages/UserPanel/Tickets/SendTicket'
-import UserPanelTickets from './Pages/UserPanel/Tickets/Tickets'
+import UserPanelCourses from "./Pages/UserPanel/Courses/Courses";
+import SendTicket from "./Pages/UserPanel/Tickets/SendTicket";
+import UserPanelTickets from "./Pages/UserPanel/Tickets/Tickets";
 import UserPanelTicketAnswer from "./Pages/UserPanel/Tickets/TicketAnswer";
-import UserPanelEditAccount from './Pages/UserPanel/EditAccount/EditAccount'
+import UserPanelEditAccount from "./Pages/UserPanel/EditAccount/EditAccount";
+
+import PAdminPrivate from "./Components/Privates/PAdminPrivate";
 
 const routes = [
   { path: "/", element: <Index /> },
@@ -43,10 +45,14 @@ const routes = [
   { path: "/register", element: <Register /> },
   { path: "/contact", element: <Contact /> },
   { path: "/search/:value", element: <Search /> },
-  { path: "/:courseName/:sessionID", element: <Session/>},
+  { path: "/:courseName/:sessionID", element: <Session /> },
   {
     path: "/p-admin/*",
-    element: <AdminPanel />,
+    element: (
+      <PAdminPrivate>
+        <AdminPanel />
+      </PAdminPrivate>
+    ),
     children: [
       {
         path: "",
@@ -74,60 +80,64 @@ const routes = [
       },
       {
         path: "category",
-        element: <AdminCategory/>,
+        element: <AdminCategory />,
       },
       {
         path: "contacts",
-        element: <AdminContact/>,
+        element: <AdminContact />,
       },
       {
         path: "sessions",
-        element: <Sessions/>,
+        element: <Sessions />,
       },
       {
         path: "comments",
-        element: <Comments/>,
+        element: <Comments />,
       },
       {
         path: "offs",
-        element: <Offs/>,
-      }
+        element: <Offs />,
+      },
     ],
   },
   {
     path: "/my-account/*",
-    element: <UserPanel/>,
+    element: <UserPanel />,
     children: [
       {
         path: "",
-        element: <UserPanelIndex/>,
+        element: <UserPanelIndex />,
       },
       {
         path: "orders",
-        element: <UserPanelOrders/>,
+        element: <UserPanelOrders />,
       },
       {
         path: "orders/orderdetaile/:shortName ",
-        element: <OrderDetaile/>,
+        element: <OrderDetaile />,
       },
       {
         path: "buyed",
-        element: <UserPanelCourses/>,
+        element: <UserPanelCourses />,
       },
       {
-        path : "send-ticket" , element : <SendTicket/>
+        path: "send-ticket",
+        element: <SendTicket />,
       },
       {
-        path : "tickets" , element : <UserPanelTickets/>
+        path: "tickets",
+        element: <UserPanelTickets />,
       },
       {
-        path : "tickets/answer/:id" , element : <UserPanelTicketAnswer/>
+        path: "tickets/answer/:id",
+        element: <UserPanelTicketAnswer />,
       },
       {
-        path : "edit-account" , element : <UserPanelEditAccount/>
-      }
-    ]
-  }
-]
+        path: "edit-account",
+        element: <UserPanelEditAccount />,
+      },
+    ],
+  },
+];
 
 export default routes;
