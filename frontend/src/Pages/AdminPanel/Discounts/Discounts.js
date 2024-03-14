@@ -29,6 +29,7 @@ export default function Discounts() {
         }
       })
   };
+  
   return (
     <>
       <div class="home-title">
