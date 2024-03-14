@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 export default function Ticket(props) {
   return (
@@ -6,9 +7,9 @@ export default function Ticket(props) {
       <div className="ticket-content__box">
         <div className="ticket-content__right">
           <div className="ticket-content__right-right">
-            <a className="ticket-content__link" href="#">
+            <Link to={`answer/${props._id}`} className="ticket-content__link" href="#">
               {props.title}
-            </a>
+            </Link>
             <span className="ticket-content__category">
               <i className="fa fa-ellipsis-v ticket-content__icon"></i>
               {props.departmentSubID}
