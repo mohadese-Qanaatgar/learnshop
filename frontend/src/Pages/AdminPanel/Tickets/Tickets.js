@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import DataTable from "../DataTable/DataTable";
+import swal from 'sweetalert'
 
 export default function Tickets() {
   const [tickets, setTickets] = useState([]);
@@ -18,6 +19,13 @@ export default function Tickets() {
         setTickets(allTicket);
       });
   }, []);
+
+  const showTicketBody = (body) => {
+    swal({
+        title : body,
+        buttons : 'تایید'
+    })
+  }
   return (
     <>
       <DataTable title="تیکت ها">
@@ -51,7 +59,7 @@ export default function Tickets() {
                   <button
                     type="button"
                     class="btn btn-primary edit-btn"
-                    //   onClick={() => {showTicketBody(ticket.body)}}
+                      onClick={() => {showTicketBody(ticket.body)}}
                   >
                     مشاهده
                   </button>
