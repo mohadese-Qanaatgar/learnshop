@@ -93,7 +93,7 @@ export default function TicketAnswer() {
           ) : (
             <div class="ticket-send__answer-user">
               <div class="ticket-send__answer-user-box">
-                <p class="ticket-send__answer-user-text"></p>
+                <p class="ticket-send__answer-user-text">{ticketInfo.answer}</p>
               </div>
               <div class="ticket-send__answer-user-bottom">
                 <span class="ticket-send__answer-user-name ticket-send__answer-user-span">

@@ -6,24 +6,64 @@ export default function Tickets() {
   const [tickets, setTickets] = useState([]);
 
   useEffect(() => {
-    fetch(`http://localhost:4000/v1/tickets`, {
-      headers: {
-        Authorization: `Bearer ${
-          JSON.parse(localStorage.getItem("user")).token
-        }`,
-      },
-    })
-      .then((res) => res.json())
-      .then((allTicket) => {
-        console.log(allTicket);
-        setTickets(allTicket);
-      });
+    getAllTickets()
   }, []);
+
+  function getAllTickets () {
+    fetch(`http://localhost:4000/v1/tickets`, {
+        headers: {
+          Authorization: `Bearer ${
+            JSON.parse(localStorage.getItem("user")).token
+          }`,
+        },
+      })
+        .then((res) => res.json())
+        .then((allTicket) => {
+          console.log(allTicket);
+          setTickets(allTicket);
+        });
+  }
 
   const showTicketBody = (body) => {
     swal({
         title : body,
         buttons : 'تایید'
+    })
+  }
+
+  const answerToTicket = (ticketID) => {
+    swal({
+        title : 'لطفا پاسخ مورد نظر را وارد کنید',
+        content : 'input',
+        buttons : 'تایید'
+    }).then(value => {
+        // console.log(value);
+        if(value) {
+            const ticketAnswerInfos = {
+                ticketID,
+                body : value
+            }
+            fetch(`http://localhost:4000/v1/tickets/answer`,{
+                method : 'POST',
+                headers : {
+                    Authorization : `Bearer ${
+                        JSON.parse(localStorage.getItem("user")).token
+                      }`,
+                      'Content-Type' : 'application/json'
+                },
+                body : JSON.stringify(ticketAnswerInfos)
+            }).then(res => {
+                if(res.ok){
+                    swal({
+                        title :'پاسخ شما با موفقیت ثبت شد',
+                        icon : 'success',
+                        buttons : "تایید"
+                    }).then(() => {
+                        getAllTickets()
+                    })
+                }
+            })
+        }
     })
   }
   return (
@@ -65,9 +105,17 @@ export default function Tickets() {
                   </button>
                 </td>
                 <td>
-                  <button type="button" class="btn btn-primary edit-btn">
+                  {
+                    ticket.answer === 1 ? 'پاسخ داده شده' : (
+                        <>
+                        <button type="button" class="btn btn-primary edit-btn"
+                  onClick={() => {answerToTicket(ticket._id)}}
+                  >
                     پاسخ
                   </button>
+                        </>
+                    )
+                  }
                 </td>
               </tr>
             ))}
