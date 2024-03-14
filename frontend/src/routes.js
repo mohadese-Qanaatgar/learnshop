@@ -20,6 +20,7 @@ import Sessions from "./Pages/AdminPanel/Sessions/Sessions";
 import Session from "./Pages/Session/Session";
 import Comments from "./Pages/AdminPanel/Comments/Comments";
 import Offs from "./Pages/AdminPanel/Offs/Offs";
+import Discounts from "./Pages/AdminPanel/Discounts/Discounts";
 import Draft from "./Pages/AdminPanel/Articles/Draft";
 import PAdminIndex from "./Pages/AdminPanel/Index/Index";
 import Tickets from "./Pages/AdminPanel/Tickets/Tickets";
@@ -100,6 +101,10 @@ const routes = [
       {
         path: "offs",
         element: <Offs />,
+      },
+      {
+        path: "discounts",
+        element: <Discounts/>,
       },
       {
         path: "tickets",
