@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
+import swal from "sweetalert";
 
 import "./SendTicket.css";
+import { useNavigate } from "react-router-dom";
 
 export default function SendTicket() {
   const [departments, setDepartments] = useState([]);
@@ -13,6 +15,7 @@ export default function SendTicket() {
   const [body , setBody] = useState('')
   const [courseID , setCourseID] = useState('')
 
+  const navigate = useNavigate()
 
   useEffect(() => {
     fetch(`http://localhost:4000/v1/tickets/departments`)
@@ -59,10 +62,15 @@ export default function SendTicket() {
       },
       body : JSON.stringify(newTicketInfos)
     }).then(res => {
-      console.log(res);
-      return res.json()
-    }).then(data => {
-      console.log(data);
+      if(res.ok){
+        swal({
+          title: "تیکت شما با موفقیت ثبت شد",
+          icon  :'success',
+          buttons : 'تایید'
+        }).then(() => {
+          navigate('/my-account/tickets')
+        })
+      }
     })
   }
   return (
