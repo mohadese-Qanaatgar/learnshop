@@ -1,23 +1,53 @@
 import React, { useContext, useEffect, useState } from "react";
-import AuthContext from './../../../Context/authContext'
+import AuthContext from "./../../../Context/authContext";
+import swal from 'sweetalert'
 
-import './EditAccount.css'
+import "./EditAccount.css";
 
 export default function EditAccount() {
+  const authContext = useContext(AuthContext);
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-    const authContext = useContext(AuthContext)
-    const [name, setName] = useState('')
-    const [phone, setPhone] = useState('')
-    const [username, setUsername] = useState('')
-    const [email, setEmail] = useState('')
+  useEffect(() => {
+    setName(authContext.userInfos.name);
+    setPhone(authContext.userInfos.phone);
+    setUsername(authContext.userInfos.username);
+    setUsername(authContext.userInfos.username);
+    setEmail(authContext.userInfos.email);
+  }, []);
 
-    useEffect(() => {
-        setName(authContext.userInfos.name)
-        setPhone(authContext.userInfos.phone)
-        setUsername(authContext.userInfos.username)
-        setUsername(authContext.userInfos.username)
-        setEmail(authContext.userInfos.email)
-    }, [])
+  const editAccount = (event) => {
+    event.preventDefault();
+
+    const userNewInfos = {
+      name,
+      username,
+      email,
+      password,
+      phone,
+    };
+
+    fetch(`http://localhost:4000/v1/users/`, {
+      method: 'PUT',
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${JSON.parse(localStorage.getItem('user')).token}`
+      },
+      body: JSON.stringify(userNewInfos)
+    }).then(res => {
+      if(res.ok) {
+        swal({
+          title: "اطلاعات اکانت شما با موفقیت ویرایش شد",
+          icon: 'success',
+          buttons: "تایید"
+        })
+      }
+    })
+  };
 
   return (
     <div class="col-9">
@@ -31,18 +61,18 @@ export default function EditAccount() {
                   class="edit__input"
                   type="text"
                   value={phone}
-                  onChange={event => setPhone(event.target.value)}
+                  onChange={(event) => setPhone(event.target.value)}
                   placeholder="لطفا شماره موبایل خود را وارد کنید"
                 />
               </div>
-              
+
               <div class="col-12">
                 <label class="edit__label">نام و نام خانوادگی *</label>
                 <input
                   class="edit__input"
                   type="text"
                   value={name}
-                  onChange={event => setName(event.target.value)}
+                  onChange={(event) => setName(event.target.value)}
                   placeholder="لطفا نام نمایشی خود را وارد کنید"
                 />
               </div>
@@ -52,7 +82,7 @@ export default function EditAccount() {
                   class="edit__input"
                   type="text"
                   value={username}
-                  onChange={event => setUsername(event.target.value)}
+                  onChange={(event) => setUsername(event.target.value)}
                   placeholder="لطفا نام نمایشی خود را وارد کنید"
                 />
                 <span class="edit__help">
@@ -65,7 +95,7 @@ export default function EditAccount() {
                   class="edit__input"
                   type="text"
                   value={email}
-                  onChange={event => setEmail(event.target.value)}
+                  onChange={(event) => setEmail(event.target.value)}
                   placeholder="لطفا نام نمایشی خود را وارد کنید"
                 />
               </div>
@@ -75,36 +105,18 @@ export default function EditAccount() {
             <span class="edit__password-title">تغییر گذرواژه</span>
             <div class="row">
               <div class="col-12">
-                <label class="edit__label">
-                  گذرواژه پیشین (در صورتی که قصد تغییر ندارید خالی بگذارید)
-                </label>
-                <input
-                  class="edit__input"
-                  type="text"
-                  placeholder="گذرواژه پیشین"
-                />
-              </div>
-              <div class="col-12">
-                <label class="edit__label">
-                  گذرواژه جدید (در صورتی که قصد تغییر ندارید خالی بگذارید)
-                </label>
-                <input
-                  class="edit__input"
-                  type="text"
-                  placeholder="گذرواژه جدید"
-                />
-              </div>
-              <div class="col-12">
                 <label class="edit__label">تکرار گذرواژه جدید</label>
                 <input
                   class="edit__input"
                   type="text"
+                  value={password}
+                  onChange={(event) => setPassword(event.target.value)}
                   placeholder="تکرار گذرواژه جدید"
                 />
               </div>
             </div>
           </div>
-          <button class="edit__btn" type="submit">
+          <button class="edit__btn" type="submit" onClick={editAccount}>
             ذخیره تغییرات
           </button>
         </form>
