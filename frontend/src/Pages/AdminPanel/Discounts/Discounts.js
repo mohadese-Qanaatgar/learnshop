@@ -37,11 +37,11 @@ export default function Discounts() {
       <form class="form">
         <div class="col-6">
           <div class="name input">
-            <label class="input-title">عنوان</label>
+            <label class="input-title">درصد تخفیف</label>
             <input
               type="text"
               value={discount}
-              placeholder="لطفا عنوان را وارد کنید..."
+              placeholder="لطفا درصد تخفیف را وارد کنید..."
               onChange={(event) => setDiscount(event.target.value)}
             />
             <span class="error-message text-danger"></span>
