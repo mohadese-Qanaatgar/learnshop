@@ -135,6 +135,38 @@ export default function Users() {
       getAllUsers()
     })
   };
+  const changeRole = (userID) => {
+    swal({
+      title : 'لطفا نقش مورد نظر را وارد کنید',
+      content : 'input',
+      buttons : 'تایید'
+    }).then(value => {
+      if(value.length) {
+        const reqBodyInfos = {
+          role : value,
+          id : userID
+        }
+        fetch(`http://localhost:4000/v1/users/role`,{
+          method : 'PUT',
+          headers : {
+            Authorization : `Bearer ${JSON.parse(localStorage.getItem('user')).token}`,
+            'Content-type' : 'application/json'
+          },
+          body : JSON.stringify(reqBodyInfos)
+        }).then(res => {
+          if(res.ok) {
+            swal({
+              title : 'نقش مورد نظر با موفقیت ثبت شد',
+              icon : 'success',
+              buttons : 'تایید'
+            }).then(() => {
+              getAllUsers()
+            })
+          }
+        })
+      }
+    })
+  }
 
   return (
     <>
@@ -255,7 +287,9 @@ export default function Users() {
               <th>شناسه</th>
               <th>نام و نام خانوادگی</th>
               <th>ایمیل</th>
+              <th>نقش</th>
               <th>ویرایش</th>
+              <th>تغییر نقش</th>
               <th>حذف</th>
               <th>بن</th>
             </tr>
@@ -267,9 +301,17 @@ export default function Users() {
                 <td>{user.name}</td>
                 {/* <td>09123443243</td> */}
                 <td>{user.email}</td>
+                <td>{user.role === 'ADMIN' ? 'مدیر': "کاربر عادی"}</td>
                 <td>
                   <button type="button" class="btn btn-primary edit-btn">
                     ویرایش
+                  </button>
+                </td>
+                <td>
+                  <button type="button" class="btn btn-primary edit-btn"
+                  onClick={() => changeRole(user._id)}
+                  >
+                    تغییر نقش
                   </button>
                 </td>
                 <td>
